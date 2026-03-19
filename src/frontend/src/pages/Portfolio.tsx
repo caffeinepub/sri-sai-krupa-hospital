@@ -382,38 +382,43 @@ const services = [
   },
 ];
 
+// UPDATED: replaced emoji/gradient fields with Unsplash image URLs
 const projects = [
   {
     id: "biz",
-    gradient:
-      "linear-gradient(135deg, oklch(0.51 0.24 264 / 0.85), oklch(0.62 0.18 300 / 0.85))",
+    // Corporate office / professional business website screenshot
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+    imageAlt: "Professional corporate office environment",
     title: "Business Website",
     desc: "A fully responsive corporate website for a local business.",
-    emoji: "🏢",
   },
   {
     id: "landing",
-    gradient:
-      "linear-gradient(135deg, oklch(0.55 0.18 160 / 0.85), oklch(0.65 0.18 185 / 0.85))",
+    // Modern startup product landing page UI
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    imageAlt: "Modern startup landing page design",
     title: "Landing Page",
     desc: "High-converting landing page with modern design and clear CTAs.",
-    emoji: "🚀",
   },
   {
     id: "dashboard",
-    gradient:
-      "linear-gradient(135deg, oklch(0.72 0.18 50 / 0.85), oklch(0.65 0.18 30 / 0.85))",
+    // Analytics dashboard with charts and graphs
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    imageAlt: "Analytics dashboard with charts and graphs",
     title: "Dashboard Project",
     desc: "Interactive sales dashboard built with Power BI for a retail client.",
-    emoji: "📊",
   },
   {
     id: "ui",
-    gradient:
-      "linear-gradient(135deg, oklch(0.60 0.18 300 / 0.85), oklch(0.55 0.22 264 / 0.85))",
+    // App UI / Figma design mockup
+    image:
+      "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&q=80",
+    imageAlt: "App UI design mockup on screen",
     title: "UI Design",
     desc: "Complete UI kit and screen designs for a mobile app in Figma.",
-    emoji: "🎨",
   },
 ];
 
@@ -774,16 +779,26 @@ export default function Portfolio() {
           />
           <div className="grid sm:grid-cols-2 gap-6 reveal-stagger visible">
             {projects.map((p, idx) => (
+              // Added `group` class to enable group-hover effects on child elements
               <div
                 key={p.id}
-                className="card-portfolio bg-white rounded-2xl overflow-hidden border border-border shadow-card"
+                className="card-portfolio bg-white rounded-2xl overflow-hidden border border-border shadow-card group"
                 data-ocid={`portfolio.item.${idx + 1}`}
               >
-                <div
-                  className="h-44 flex items-center justify-center text-5xl"
-                  style={{ background: p.gradient }}
-                >
-                  {p.emoji}
+                {/* UPDATED: Project image with hover zoom + dark overlay — replaces emoji/gradient icons */}
+                <div className="relative h-44 overflow-hidden">
+                  {/* Image: covers full area, zooms in on card hover (scale-105) */}
+                  <img
+                    src={p.image}
+                    alt={p.imageAlt}
+                    className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                  />
+                  {/* Dark overlay: fades in on hover; "View Project →" text appears centered */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 ease-in-out flex items-center justify-center">
+                    <span className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                      View Project →
+                    </span>
+                  </div>
                 </div>
                 <div className="p-5">
                   <h3 className="text-base font-bold text-foreground mb-1">
