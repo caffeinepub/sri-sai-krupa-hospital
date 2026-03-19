@@ -89,133 +89,47 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface Appointment {
-    id: bigint;
+export interface ContactSubmission {
     name: string;
-    message?: string;
-    preferredDate: bigint;
+    email: string;
+    message: string;
     timestamp: Time;
-    department: string;
-    phoneNumber: string;
 }
 export type Time = bigint;
-export interface AppointmentInput {
-    name: string;
-    message?: string;
-    preferredDate: bigint;
-    department: string;
-    phoneNumber: string;
-}
 export interface backendInterface {
-    bookAppointment(input: AppointmentInput): Promise<bigint>;
-    getAllAppointments(): Promise<Array<Appointment>>;
-    getAppointmentById(id: bigint): Promise<Appointment>;
+    getAllContactSubmissions(): Promise<Array<ContactSubmission>>;
+    submitContact(name: string, email: string, message: string): Promise<bigint>;
 }
-import type { Appointment as _Appointment, AppointmentInput as _AppointmentInput, Time as _Time } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
-    async bookAppointment(arg0: AppointmentInput): Promise<bigint> {
+    async getAllContactSubmissions(): Promise<Array<ContactSubmission>> {
         if (this.processError) {
             try {
-                const result = await this.actor.bookAppointment(to_candid_AppointmentInput_n1(this._uploadFile, this._downloadFile, arg0));
+                const result = await this.actor.getAllContactSubmissions();
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.bookAppointment(to_candid_AppointmentInput_n1(this._uploadFile, this._downloadFile, arg0));
+            const result = await this.actor.getAllContactSubmissions();
             return result;
         }
     }
-    async getAllAppointments(): Promise<Array<Appointment>> {
+    async submitContact(arg0: string, arg1: string, arg2: string): Promise<bigint> {
         if (this.processError) {
             try {
-                const result = await this.actor.getAllAppointments();
-                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+                const result = await this.actor.submitContact(arg0, arg1, arg2);
+                return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getAllAppointments();
-            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.submitContact(arg0, arg1, arg2);
+            return result;
         }
     }
-    async getAppointmentById(arg0: bigint): Promise<Appointment> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getAppointmentById(arg0);
-                return from_candid_Appointment_n4(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getAppointmentById(arg0);
-            return from_candid_Appointment_n4(this._uploadFile, this._downloadFile, result);
-        }
-    }
-}
-function from_candid_Appointment_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Appointment): Appointment {
-    return from_candid_record_n5(_uploadFile, _downloadFile, value);
-}
-function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
-    return value.length === 0 ? null : value[0];
-}
-function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    id: bigint;
-    name: string;
-    message: [] | [string];
-    preferredDate: bigint;
-    timestamp: _Time;
-    department: string;
-    phoneNumber: string;
-}): {
-    id: bigint;
-    name: string;
-    message?: string;
-    preferredDate: bigint;
-    timestamp: Time;
-    department: string;
-    phoneNumber: string;
-} {
-    return {
-        id: value.id,
-        name: value.name,
-        message: record_opt_to_undefined(from_candid_opt_n6(_uploadFile, _downloadFile, value.message)),
-        preferredDate: value.preferredDate,
-        timestamp: value.timestamp,
-        department: value.department,
-        phoneNumber: value.phoneNumber
-    };
-}
-function from_candid_vec_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Appointment>): Array<Appointment> {
-    return value.map((x)=>from_candid_Appointment_n4(_uploadFile, _downloadFile, x));
-}
-function to_candid_AppointmentInput_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: AppointmentInput): _AppointmentInput {
-    return to_candid_record_n2(_uploadFile, _downloadFile, value);
-}
-function to_candid_record_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    name: string;
-    message?: string;
-    preferredDate: bigint;
-    department: string;
-    phoneNumber: string;
-}): {
-    name: string;
-    message: [] | [string];
-    preferredDate: bigint;
-    department: string;
-    phoneNumber: string;
-} {
-    return {
-        name: value.name,
-        message: value.message ? candid_some(value.message) : candid_none(),
-        preferredDate: value.preferredDate,
-        department: value.department,
-        phoneNumber: value.phoneNumber
-    };
 }
 export interface CreateActorOptions {
     agent?: Agent;

@@ -1,59 +1,45 @@
 import Map "mo:core/Map";
-import Text "mo:core/Text";
-import Iter "mo:core/Iter";
-import Nat "mo:core/Nat";
+import Array "mo:core/Array";
 import Time "mo:core/Time";
-import Runtime "mo:core/Runtime";
-import List "mo:core/List";
+import Nat "mo:core/Nat";
+import Iter "mo:core/Iter";
+
+
+// Use migration module for upgrades
 
 actor {
-  type Appointment = {
-    id : Nat;
+  // Contact form submission type
+  public type ContactSubmission = {
     name : Text;
-    phoneNumber : Text;
-    department : Text;
-    preferredDate : Int;
-    message : ?Text;
+    email : Text;
+    message : Text;
     timestamp : Time.Time;
   };
 
-  type AppointmentInput = {
-    name : Text;
-    phoneNumber : Text;
-    department : Text;
-    preferredDate : Int;
-    message : ?Text;
-  };
+  // Persistent state
+  let contactSubmissions = Map.empty<Nat, ContactSubmission>();
+  var nextContactId = 0;
 
-  var nextId = 1;
-
-  let appointments = Map.empty<Nat, Appointment>();
-
-  public shared ({ caller }) func bookAppointment(input : AppointmentInput) : async Nat {
-    let id = nextId;
-    let appointment : Appointment = {
-      id;
-      name = input.name;
-      phoneNumber = input.phoneNumber;
-      department = input.department;
-      preferredDate = input.preferredDate;
-      message = input.message;
+  // Submit a new contact form
+  public shared ({ caller }) func submitContact(
+    name : Text,
+    email : Text,
+    message : Text,
+  ) : async Nat {
+    let id = nextContactId;
+    let submission : ContactSubmission = {
+      name;
+      email;
+      message;
       timestamp = Time.now();
     };
-
-    appointments.add(id, appointment);
-    nextId += 1;
+    contactSubmissions.add(id, submission);
+    nextContactId += 1;
     id;
   };
 
-  public query ({ caller }) func getAllAppointments() : async [Appointment] {
-    appointments.values().toArray();
-  };
-
-  public query ({ caller }) func getAppointmentById(id : Nat) : async Appointment {
-    switch (appointments.get(id)) {
-      case (null) { Runtime.trap("Appointment not found") };
-      case (?appointment) { appointment };
-    };
+  // Get all contact submissions (admin only)
+  public query ({ caller }) func getAllContactSubmissions() : async [ContactSubmission] {
+    contactSubmissions.values().toArray();
   };
 };

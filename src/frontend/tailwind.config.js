@@ -10,25 +10,15 @@ export default {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: { "2xl": "1400px" },
     },
     extend: {
       fontFamily: {
-        sans: ["Figtree", "sans-serif"],
-        display: ["Bricolage Grotesque", "sans-serif"],
+        sans: ["'Plus Jakarta Sans'", "'DM Sans'", "sans-serif"],
+        display: ["'Plus Jakarta Sans'", "sans-serif"],
+        mono: ["monospace"],
       },
       colors: {
-        hospital: {
-          primary: "oklch(var(--hospital-primary))",
-          "primary-light": "oklch(var(--hospital-primary-light))",
-          "primary-dark": "oklch(var(--hospital-primary-dark))",
-          teal: "oklch(var(--hospital-teal))",
-          "teal-light": "oklch(var(--hospital-teal-light))",
-          green: "oklch(var(--hospital-green))",
-          "green-light": "oklch(var(--hospital-green-light))",
-        },
         border: "oklch(var(--border))",
         input: "oklch(var(--input))",
         ring: "oklch(var(--ring) / <alpha-value>)",
@@ -62,6 +52,10 @@ export default {
           DEFAULT: "oklch(var(--card))",
           foreground: "oklch(var(--card-foreground))",
         },
+        indigo: {
+          DEFAULT: "oklch(var(--indigo))",
+          dark: "oklch(var(--indigo-dark))",
+        },
         chart: {
           1: "oklch(var(--chart-1))",
           2: "oklch(var(--chart-2))",
@@ -84,9 +78,13 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "1rem",
+        "2xl": "1.25rem",
       },
       boxShadow: {
-        xs: "0 1px 2px 0 rgba(0,0,0,0.05)",
+        card: "0 8px 24px rgba(17,24,39,0.08)",
+        "card-hover": "0 16px 40px rgba(79,70,229,0.14)",
+        navbar: "0 1px 0 rgba(17,24,39,0.08)",
       },
       keyframes: {
         "accordion-down": {
@@ -97,10 +95,20 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        "spin-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        float: "float 4s ease-in-out infinite",
+        "spin-slow": "spin-slow 20s linear infinite",
       },
     },
   },

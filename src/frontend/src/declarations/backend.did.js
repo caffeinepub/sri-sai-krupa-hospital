@@ -8,55 +8,41 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const AppointmentInput = IDL.Record({
-  'name' : IDL.Text,
-  'message' : IDL.Opt(IDL.Text),
-  'preferredDate' : IDL.Int,
-  'department' : IDL.Text,
-  'phoneNumber' : IDL.Text,
-});
 export const Time = IDL.Int;
-export const Appointment = IDL.Record({
-  'id' : IDL.Nat,
+export const ContactSubmission = IDL.Record({
   'name' : IDL.Text,
-  'message' : IDL.Opt(IDL.Text),
-  'preferredDate' : IDL.Int,
+  'email' : IDL.Text,
+  'message' : IDL.Text,
   'timestamp' : Time,
-  'department' : IDL.Text,
-  'phoneNumber' : IDL.Text,
 });
 
 export const idlService = IDL.Service({
-  'bookAppointment' : IDL.Func([AppointmentInput], [IDL.Nat], []),
-  'getAllAppointments' : IDL.Func([], [IDL.Vec(Appointment)], ['query']),
-  'getAppointmentById' : IDL.Func([IDL.Nat], [Appointment], ['query']),
+  'getAllContactSubmissions' : IDL.Func(
+      [],
+      [IDL.Vec(ContactSubmission)],
+      ['query'],
+    ),
+  'submitContact' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [IDL.Nat], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
-  const AppointmentInput = IDL.Record({
-    'name' : IDL.Text,
-    'message' : IDL.Opt(IDL.Text),
-    'preferredDate' : IDL.Int,
-    'department' : IDL.Text,
-    'phoneNumber' : IDL.Text,
-  });
   const Time = IDL.Int;
-  const Appointment = IDL.Record({
-    'id' : IDL.Nat,
+  const ContactSubmission = IDL.Record({
     'name' : IDL.Text,
-    'message' : IDL.Opt(IDL.Text),
-    'preferredDate' : IDL.Int,
+    'email' : IDL.Text,
+    'message' : IDL.Text,
     'timestamp' : Time,
-    'department' : IDL.Text,
-    'phoneNumber' : IDL.Text,
   });
   
   return IDL.Service({
-    'bookAppointment' : IDL.Func([AppointmentInput], [IDL.Nat], []),
-    'getAllAppointments' : IDL.Func([], [IDL.Vec(Appointment)], ['query']),
-    'getAppointmentById' : IDL.Func([IDL.Nat], [Appointment], ['query']),
+    'getAllContactSubmissions' : IDL.Func(
+        [],
+        [IDL.Vec(ContactSubmission)],
+        ['query'],
+      ),
+    'submitContact' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [IDL.Nat], []),
   });
 };
 

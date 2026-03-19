@@ -1,148 +1,123 @@
 import { Button } from "@/components/ui/button";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Heart, Menu, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Doctors", href: "#doctors" },
-  { label: "Facilities", href: "#facilities" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouterState();
+  const currentPath = router.location.pathname;
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const scrollTo = (href: string) => {
-    setIsMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-transparent"
+        scrolled ? "navbar-scrolled" : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 lg:h-20">
-        {/* Logo */}
-        <button
-          type="button"
-          onClick={() => scrollTo("#home")}
-          className="flex items-center gap-2 group"
-        >
-          <div className="w-9 h-9 rounded-full hospital-gradient flex items-center justify-center shadow-sm">
-            <Heart className="w-4 h-4 text-white fill-white" />
-          </div>
-          <div className="text-left">
-            <span
-              className={`font-display font-bold text-base lg:text-lg leading-tight block transition-colors ${
-                isScrolled ? "text-hospital-primary" : "text-white"
-              }`}
-            >
-              Sri Sai Krupa
+      <nav
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        aria-label="Main navigation"
+      >
+        <div className="flex items-center justify-between h-16 lg:h-20">
+          {/* Logo */}
+          <Link
+            to="/"
+            className="flex items-center gap-2 group"
+            data-ocid="nav.link"
+          >
+            <div className="w-9 h-9 rounded-lg gradient-teal flex items-center justify-center shadow-md">
+              <Heart className="w-5 h-5 text-white" fill="white" />
+            </div>
+            <span className="font-display font-bold text-xl text-white tracking-tight">
+              MedCare<span className="text-teal">Pro</span>
             </span>
-            <span
-              className={`text-xs font-medium tracking-wide block transition-colors ${
-                isScrolled ? "text-hospital-teal" : "text-white/80"
-              }`}
-            >
-              HOSPITAL
-            </span>
-          </div>
-        </button>
+          </Link>
 
-        {/* Desktop nav */}
-        <ul className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <button
-                type="button"
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
                 data-ocid="nav.link"
-                onClick={() => scrollTo(link.href)}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-hospital-teal ${
-                  isScrolled
-                    ? "text-foreground/80 hover:bg-hospital-teal/10"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                  currentPath === link.href
+                    ? "text-teal bg-white/10"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
                 {link.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA Button */}
-        <div className="hidden lg:block">
-          <Button
-            data-ocid="nav.primary_button"
-            onClick={() => scrollTo("#appointment")}
-            className="hospital-gradient text-white font-semibold px-5 py-2 rounded-full shadow-md hover:opacity-90 transition-opacity border-0"
-          >
-            Book Appointment
-          </Button>
-        </div>
-
-        {/* Mobile menu toggle */}
-        <button
-          type="button"
-          className={`lg:hidden p-2 rounded-md transition-colors ${
-            isScrolled ? "text-foreground" : "text-white"
-          }`}
-          onClick={() => setIsMobileOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {isMobileOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </button>
-      </nav>
-
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden bg-white shadow-xl border-t border-border overflow-hidden"
-          >
-            <div className="px-4 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <button
-                  type="button"
-                  key={link.label}
-                  data-ocid="nav.link"
-                  onClick={() => scrollTo(link.href)}
-                  className="text-left px-4 py-3 text-sm font-medium text-foreground/80 hover:text-hospital-primary hover:bg-hospital-teal/10 rounded-md transition-colors"
-                >
-                  {link.label}
-                </button>
-              ))}
+              </Link>
+            ))}
+            <Link to="/contact">
               <Button
+                className="ml-3 gradient-teal text-white border-0 hover:opacity-90 font-semibold px-5"
                 data-ocid="nav.primary_button"
-                onClick={() => scrollTo("#appointment")}
-                className="mt-2 hospital-gradient text-white font-semibold rounded-full border-0"
               >
                 Book Appointment
               </Button>
-            </div>
-          </motion.div>
+            </Link>
+          </div>
+
+          {/* Mobile Hamburger */}
+          <button
+            type="button"
+            className="md:hidden text-white p-2"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            data-ocid="nav.toggle"
+          >
+            {menuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden bg-navy-dark/95 backdrop-blur-sm rounded-xl mx-2 mb-3 p-3 border border-white/10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                data-ocid="nav.link"
+                className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  currentPath === link.href
+                    ? "text-teal bg-white/10"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
+                }`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link to="/contact" onClick={() => setMenuOpen(false)}>
+              <Button
+                className="w-full mt-2 gradient-teal text-white border-0 font-semibold"
+                data-ocid="nav.primary_button"
+              >
+                Book Appointment
+              </Button>
+            </Link>
+          </div>
         )}
-      </AnimatePresence>
+      </nav>
     </header>
   );
 }

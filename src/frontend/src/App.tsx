@@ -1,29 +1,14 @@
 import { Toaster } from "@/components/ui/sonner";
-import AboutSection from "./components/AboutSection";
-import AppointmentSection from "./components/AppointmentSection";
-import ContactSection from "./components/ContactSection";
-import DoctorsSection from "./components/DoctorsSection";
-import FacilitiesSection from "./components/FacilitiesSection";
-import Footer from "./components/Footer";
-import HeroSection from "./components/HeroSection";
-import Navbar from "./components/Navbar";
-import ServicesSection from "./components/ServicesSection";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Portfolio from "./pages/Portfolio";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navbar />
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <ServicesSection />
-        <DoctorsSection />
-        <FacilitiesSection />
-        <AppointmentSection />
-        <ContactSection />
-      </main>
-      <Footer />
-      <Toaster richColors position="top-right" />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Portfolio />
+      <Toaster position="bottom-right" richColors />
+    </QueryClientProvider>
   );
 }

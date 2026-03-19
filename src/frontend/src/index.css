@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Lavender / Indigo portfolio theme */
+    /* #F4F1FF → oklch(0.96 0.016 281) */
+    --background: 0.96 0.016 281;
+    /* #111827 → oklch(0.18 0.02 264) */
+    --foreground: 0.18 0.02 264;
+
+    /* white cards */
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.02 264;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.02 264;
+
+    /* indigo #4F46E5 → oklch(0.51 0.24 264) */
+    --primary: 0.51 0.24 264;
+    --primary-foreground: 1 0 0;
+
+    /* #F7F7FB subtle section bg */
+    --secondary: 0.97 0.008 281;
+    --secondary-foreground: 0.18 0.02 264;
+
+    --muted: 0.97 0.008 281;
+    /* #6B7280 → oklch(0.52 0.014 264) */
+    --muted-foreground: 0.52 0.014 264;
+
+    --accent: 0.51 0.24 264;
+    --accent-foreground: 1 0 0;
+
+    --destructive: 0.58 0.22 25;
+    --destructive-foreground: 1 0 0;
+
+    /* #E5E7EB → oklch(0.92 0.008 264) */
+    --border: 0.92 0.008 264;
+    --input: 0.92 0.008 264;
+    --ring: 0.51 0.24 264;
+
+    --radius: 0.75rem;
+
+    /* Custom brand tokens */
+    --indigo: 0.51 0.24 264;
+    --indigo-dark: 0.44 0.22 264;
+    --lavender-bg: 0.96 0.016 281;
+    --section-alt: 0.97 0.008 281;
+
+    --chart-1: 0.51 0.24 264;
+    --chart-2: 0.62 0.14 185;
+    --chart-3: 0.72 0.16 30;
+    --chart-4: 0.6 0.18 140;
+    --chart-5: 0.7 0.16 0;
+
+    --sidebar: 0.51 0.24 264;
+    --sidebar-foreground: 1 0 0;
+    --sidebar-primary: 0.44 0.22 264;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.46 0.22 264;
+    --sidebar-accent-foreground: 1 0 0;
+    --sidebar-border: 0.55 0.2 264;
+    --sidebar-ring: 0.51 0.24 264;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
+  }
+}
+
+/* Utility: indigo button */
+@layer utilities {
+  .btn-indigo {
+    background-color: oklch(var(--indigo));
+    color: white;
+    border-radius: 8px;
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s
+      ease;
+  }
+  .btn-indigo:hover {
+    background-color: oklch(var(--indigo-dark));
+    transform: scale(1.03);
+    box-shadow: 0 4px 16px oklch(var(--indigo) / 0.35);
+  }
+  .section-alt {
+    background-color: oklch(var(--section-alt));
+  }
+  .card-portfolio {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card-portfolio:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px oklch(var(--indigo) / 0.14);
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal-stagger.visible > *:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.05s;
+}
+.reveal-stagger.visible > *:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.reveal-stagger.visible > *:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+.reveal-stagger.visible > *:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(var(--indigo) / 0.4);
+}

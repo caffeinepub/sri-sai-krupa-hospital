@@ -10,27 +10,16 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface Appointment {
-  'id' : bigint,
+export interface ContactSubmission {
   'name' : string,
-  'message' : [] | [string],
-  'preferredDate' : bigint,
+  'email' : string,
+  'message' : string,
   'timestamp' : Time,
-  'department' : string,
-  'phoneNumber' : string,
-}
-export interface AppointmentInput {
-  'name' : string,
-  'message' : [] | [string],
-  'preferredDate' : bigint,
-  'department' : string,
-  'phoneNumber' : string,
 }
 export type Time = bigint;
 export interface _SERVICE {
-  'bookAppointment' : ActorMethod<[AppointmentInput], bigint>,
-  'getAllAppointments' : ActorMethod<[], Array<Appointment>>,
-  'getAppointmentById' : ActorMethod<[bigint], Appointment>,
+  'getAllContactSubmissions' : ActorMethod<[], Array<ContactSubmission>>,
+  'submitContact' : ActorMethod<[string, string, string], bigint>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
