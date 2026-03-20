@@ -1,36 +1,32 @@
-# Sri Sai Krupa Hospital Website
+# HDPE Pipes Product Page
 
 ## Current State
-New project. No existing code.
+App.tsx renders ShowcasePage. The project has a MedCarePro hospital site structure with various pages.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Full hospital website for Sri Sai Krupa Hospital, Sahakara Nagar, Bangalore
-- Hero section with hospital name, tagline, and appointment CTA
-- About section describing the hospital
-- Services/Specialties section listing key medical departments
-- Doctors section with doctor profiles
-- Facilities section highlighting hospital infrastructure
-- Contact section with address, phone, map placeholder, and working hours
-- Appointment booking form (name, phone, department, preferred date)
-- Navigation bar with smooth scroll links
+- New ProductPage component matching the Figma screenshot
+- Image carousel with main image + thumbnail strip
+- Product info panel: breadcrumb, certifications badges, title, bullet features, price range, shipping info, CTA buttons
+- Trusted companies logo strip (EUROFLEX logos)
+- Dark-themed technical specifications table section with download button
 
 ### Modify
-- None
+- App.tsx to render the new ProductPage
 
 ### Remove
-- None
+- Nothing (keep existing files)
 
 ## Implementation Plan
-1. Backend: Store appointment bookings (name, phone, department, date, message). Provide submit and list functions.
-2. Frontend:
-   - Sticky top navbar with logo and nav links
-   - Hero banner with hospital name, tagline, and "Book Appointment" button
-   - About Us section
-   - Services grid (General Medicine, Pediatrics, Gynecology, Surgery, Orthopedics, Emergency Care, Diagnostics, Physiotherapy)
-   - Doctors section (sample doctors with specialties)
-   - Facilities highlights
-   - Appointment booking form wired to backend
-   - Contact section: address (Behind Semilar Research Center, Sahakara Nagar, Bangalore), phone, hours
-   - Footer with copyright
+1. Create ProductPage.tsx with two main sections:
+   - Hero product section (white bg): carousel left, product details right
+   - Technical specs section (dark bg): table + download button
+2. Carousel: main image + 6 thumbnail images, prev/next arrows
+3. Certifications: BIS, ISO, CE badge pills
+4. Price range, shipping/returns tags, certification text
+5. Two CTA buttons: Get Custom Quote (green filled), View Technical Specs (outline)
+6. Trusted by strip with EUROFLEX brand logos
+7. Tech specs table: 10 rows of parameter/specification data
+8. Download Full Technical Datasheet button
+9. Update App.tsx to render ProductPage
