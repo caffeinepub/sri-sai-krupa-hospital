@@ -14,9 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Plus Jakarta Sans'", "'DM Sans'", "sans-serif"],
-        display: ["'Plus Jakarta Sans'", "sans-serif"],
-        mono: ["monospace"],
+        sans: ["'Plus Jakarta Sans'", "sans-serif"],
+        display: ["'Figtree'", "'Plus Jakarta Sans'", "sans-serif"],
       },
       colors: {
         border: "oklch(var(--border))",
@@ -27,6 +26,7 @@ export default {
         primary: {
           DEFAULT: "oklch(var(--primary) / <alpha-value>)",
           foreground: "oklch(var(--primary-foreground))",
+          dark: "oklch(var(--primary-dark))",
         },
         secondary: {
           DEFAULT: "oklch(var(--secondary) / <alpha-value>)",
@@ -52,9 +52,15 @@ export default {
           DEFAULT: "oklch(var(--card))",
           foreground: "oklch(var(--card-foreground))",
         },
-        indigo: {
-          DEFAULT: "oklch(var(--indigo))",
-          dark: "oklch(var(--indigo-dark))",
+        fresh: {
+          green: "oklch(var(--green))",
+          "green-dark": "oklch(var(--green-dark))",
+          "green-light": "oklch(var(--green-light))",
+          "green-mid": "oklch(var(--green-mid))",
+          orange: "oklch(var(--orange))",
+          "orange-light": "oklch(var(--orange-light))",
+          teal: "oklch(var(--teal))",
+          section: "oklch(var(--section-bg))",
         },
         chart: {
           1: "oklch(var(--chart-1))",
@@ -79,36 +85,23 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
         xl: "1rem",
-        "2xl": "1.25rem",
+        "2xl": "1.5rem",
       },
       boxShadow: {
-        card: "0 8px 24px rgba(17,24,39,0.08)",
-        "card-hover": "0 16px 40px rgba(79,70,229,0.14)",
-        navbar: "0 1px 0 rgba(17,24,39,0.08)",
+        card: "0 2px 16px oklch(0.18 0.018 264 / 0.07)",
+        "card-hover": "0 16px 40px oklch(0.72 0.2 145 / 0.15)",
+        navbar: "0 2px 12px oklch(0.18 0.018 264 / 0.08)",
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-12px)" },
-        },
-        "spin-slow": {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(360deg)" },
-        },
+        "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
+        "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
+        "badge-pulse": { "0%,100%": { transform: "scale(1)" }, "50%": { transform: "scale(1.3)" } },
+        shimmer: { "0%": { backgroundPosition: "-200% 0" }, "100%": { backgroundPosition: "200% 0" } },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        float: "float 4s ease-in-out infinite",
-        "spin-slow": "spin-slow 20s linear infinite",
+        "badge-pulse": "badge-pulse 0.3s ease",
       },
     },
   },

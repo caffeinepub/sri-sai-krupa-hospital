@@ -7,14 +7,28 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export interface ContactSubmission {
+export type Time = bigint;
+export interface Contact {
     name: string;
     email: string;
     message: string;
     timestamp: Time;
 }
-export type Time = bigint;
+export interface UserProfile {
+    name: string;
+}
+export enum UserRole {
+    admin = "admin",
+    user = "user",
+    guest = "guest"
+}
 export interface backendInterface {
-    getAllContactSubmissions(): Promise<Array<ContactSubmission>>;
-    submitContact(name: string, email: string, message: string): Promise<bigint>;
+    assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
+    getAllContacts(): Promise<Array<Contact>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
+    getCallerUserRole(): Promise<UserRole>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    isCallerAdmin(): Promise<boolean>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    submitContact(name: string, email: string, message: string): Promise<void>;
 }
