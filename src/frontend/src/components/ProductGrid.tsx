@@ -9,38 +9,38 @@ export default function ProductGrid({ selectedCategory }: ProductGridProps) {
   const filtered =
     selectedCategory === "All"
       ? PRODUCTS
-      : PRODUCTS.filter((p) => p.category === selectedCategory);
+      : selectedCategory === "Sale"
+        ? PRODUCTS.filter((p) => p.isSale)
+        : PRODUCTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <section className="bg-white py-8" data-ocid="products.section">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-foreground font-display">
-            {selectedCategory === "All" ? "All Products" : selectedCategory}
-            <span className="ml-2 text-sm font-normal text-muted-foreground">
-              ({filtered.length} items)
-            </span>
-          </h2>
-        </div>
-
-        {filtered.length === 0 ? (
-          <div className="text-center py-16" data-ocid="products.empty_state">
-            <span className="text-6xl block mb-4">🔍</span>
-            <p className="text-muted-foreground text-lg">
-              No products in this category yet
-            </p>
-            <p className="text-muted-foreground text-sm mt-1">
-              Check back soon for new arrivals!
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-            {filtered.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
+    <div data-ocid="product.section">
+      <div className="mb-8">
+        <p className="text-xs tracking-widest text-luxe-secondary uppercase mb-2">
+          Curated For You
+        </p>
+        <h2 className="font-serif text-3xl md:text-4xl font-bold text-luxe-charcoal-mid uppercase tracking-wider">
+          New Arrivals
+        </h2>
+        <div className="w-12 h-px bg-luxe-gold mt-4" />
       </div>
-    </section>
+
+      {filtered.length === 0 ? (
+        <div
+          className="text-center py-16 text-luxe-secondary"
+          data-ocid="product.empty_state"
+        >
+          <p className="text-sm tracking-widest uppercase">
+            No items in this category
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          {filtered.map((product, i) => (
+            <ProductCard key={product.id} product={product} index={i} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

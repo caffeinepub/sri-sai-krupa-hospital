@@ -1,4 +1,4 @@
-import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 interface CartDrawerProps {
@@ -17,7 +17,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   } = useCart();
 
   const handleCheckout = () => {
-    alert("🎉 Order placed! Thank you for shopping with FreshCart.");
+    alert("Thank you for shopping with LuxeWear. Your order has been placed.");
     clearCart();
     onClose();
   };
@@ -26,7 +26,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-black/50 z-50 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 z-50 transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
@@ -45,20 +45,20 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
         data-ocid="cart.sheet"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-          <h2 className="text-lg font-bold text-foreground font-display">
-            Your Cart
-            <span className="ml-2 text-sm font-normal text-muted-foreground">
-              ({cartCount} items)
+        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+          <h2 className="font-serif text-lg font-semibold text-luxe-charcoal-mid tracking-widest uppercase">
+            Your Bag
+            <span className="ml-2 text-xs font-normal font-sans text-luxe-secondary">
+              ({cartCount})
             </span>
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-fresh-section transition-colors"
+            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
             data-ocid="cart.close_button"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -68,77 +68,87 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-6"
             data-ocid="cart.empty_state"
           >
-            <ShoppingCart className="w-16 h-16 text-muted-foreground" />
+            <ShoppingBag className="w-14 h-14 text-gray-200" />
             <div>
-              <p className="font-semibold text-lg text-foreground">
-                Your cart is empty
+              <p className="font-serif text-lg text-luxe-charcoal-mid">
+                Your bag is empty
               </p>
-              <p className="text-muted-foreground text-sm mt-1">
-                Add items to get started!
+              <p className="text-xs text-luxe-secondary mt-1 tracking-wider">
+                Discover our latest arrivals
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="bg-fresh-green text-white font-semibold px-6 py-2.5 rounded-full hover:bg-fresh-green-dark transition-colors"
+              className="gold-btn px-8 py-2.5 text-xs font-bold tracking-widest uppercase"
               data-ocid="cart.primary_button"
             >
-              Start Shopping
+              Continue Shopping
             </button>
           </div>
         ) : (
           <>
-            <div className="flex-1 overflow-y-auto py-2">
+            <div className="flex-1 overflow-y-auto">
               {cartItems.map((item, i) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 px-5 py-3 border-b border-border last:border-0 hover:bg-fresh-section/50 transition-colors"
+                  className="flex gap-4 px-6 py-4 border-b border-gray-50"
                   data-ocid={`cart.item.${i + 1}`}
                 >
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-14 h-14 object-cover rounded-xl flex-shrink-0 bg-fresh-section"
+                    className="w-16 h-20 object-cover bg-gray-100 flex-shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-foreground line-clamp-1">
+                    <p className="text-xs font-semibold text-luxe-charcoal-mid uppercase tracking-wider line-clamp-2">
                       {item.name}
                     </p>
-                    <p className="text-xs text-muted-foreground">{item.unit}</p>
-                    <p className="text-sm font-bold text-fresh-green mt-0.5">
-                      ₹{item.price * item.quantity}
+                    {item.selectedColor && (
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <div
+                          className="w-3 h-3 rounded-full border border-gray-300"
+                          style={{ backgroundColor: item.selectedColor }}
+                        />
+                        <span className="text-[10px] text-luxe-secondary">
+                          Color selected
+                        </span>
+                      </div>
+                    )}
+                    <p className="text-sm font-semibold text-luxe-charcoal-mid mt-2">
+                      ₹{(item.price * item.quantity).toLocaleString()}
                     </p>
-                  </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <button
-                      type="button"
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-muted-foreground hover:text-destructive transition-colors"
-                      data-ocid={`cart.delete_button.${i + 1}`}
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                    <div className="flex items-center gap-1 border border-border rounded-full overflow-hidden">
+                    <div className="flex items-center gap-3 mt-3">
+                      <div className="flex items-center border border-gray-200">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity - 1)
+                          }
+                          className="w-7 h-7 flex items-center justify-center hover:bg-luxe-charcoal hover:text-white transition-colors text-luxe-secondary"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <span className="w-7 text-center text-xs font-semibold">
+                          {item.quantity}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity + 1)
+                          }
+                          className="w-7 h-7 flex items-center justify-center hover:bg-luxe-charcoal hover:text-white transition-colors text-luxe-secondary"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
+                      </div>
                       <button
                         type="button"
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity - 1)
-                        }
-                        className="w-6 h-6 flex items-center justify-center hover:bg-fresh-green hover:text-white transition-colors text-fresh-green"
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-luxe-secondary hover:text-red-500 transition-colors"
+                        data-ocid={`cart.delete_button.${i + 1}`}
                       >
-                        <Minus className="w-3 h-3" />
-                      </button>
-                      <span className="w-5 text-center text-xs font-bold">
-                        {item.quantity}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity + 1)
-                        }
-                        className="w-6 h-6 flex items-center justify-center hover:bg-fresh-green hover:text-white transition-colors text-fresh-green"
-                      >
-                        <Plus className="w-3 h-3" />
+                        <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>
@@ -146,28 +156,34 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               ))}
             </div>
 
-            <div className="border-t border-border px-5 py-4">
-              <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                <span>Subtotal ({cartCount} items)</span>
-                <span className="font-semibold text-foreground">
-                  ₹{cartTotal}
+            <div className="border-t border-gray-100 px-6 py-5">
+              <div className="flex justify-between text-xs text-luxe-secondary mb-2 tracking-wider uppercase">
+                <span>Subtotal</span>
+                <span className="font-semibold text-luxe-charcoal-mid">
+                  ₹{cartTotal.toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between text-sm text-muted-foreground mb-4">
-                <span>Delivery charge</span>
-                <span className="font-semibold text-fresh-green">FREE</span>
+              <div className="flex justify-between text-xs text-luxe-secondary mb-5 tracking-wider uppercase">
+                <span>Shipping</span>
+                <span className="text-luxe-gold font-semibold">
+                  Complimentary
+                </span>
               </div>
-              <div className="flex justify-between font-bold text-base border-t border-border pt-3 mb-4">
-                <span>Total</span>
-                <span className="text-fresh-green">₹{cartTotal}</span>
+              <div className="flex justify-between font-semibold border-t border-gray-100 pt-4 mb-5">
+                <span className="text-xs tracking-widest uppercase text-luxe-charcoal-mid">
+                  Total
+                </span>
+                <span className="font-serif text-lg text-luxe-charcoal-mid">
+                  ₹{cartTotal.toLocaleString()}
+                </span>
               </div>
               <button
                 type="button"
                 onClick={handleCheckout}
-                className="w-full bg-fresh-green hover:bg-fresh-green-dark text-white font-bold py-3 rounded-full transition-colors text-sm"
+                className="w-full gold-btn py-3.5 text-xs font-bold tracking-[0.25em] uppercase"
                 data-ocid="cart.confirm_button"
               >
-                Proceed to Checkout →
+                Proceed to Checkout
               </button>
             </div>
           </>

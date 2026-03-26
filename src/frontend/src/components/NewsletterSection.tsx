@@ -1,4 +1,3 @@
-import { Mail } from "lucide-react";
 import { useState } from "react";
 
 export default function NewsletterSection() {
@@ -7,7 +6,7 @@ export default function NewsletterSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (email.trim()) {
       setSubmitted(true);
       setEmail("");
     }
@@ -15,50 +14,53 @@ export default function NewsletterSection() {
 
   return (
     <section
-      className="py-14 bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500"
+      className="py-20 px-4 md:px-8 bg-luxe-charcoal"
+      aria-label="Newsletter signup"
       data-ocid="newsletter.section"
     >
-      <div className="max-w-2xl mx-auto px-6 text-center">
-        <Mail className="w-12 h-12 text-white/80 mx-auto mb-4" />
-        <h2 className="text-2xl md:text-3xl font-bold text-white font-display">
-          Get Fresh Deals in Your Inbox
+      <div className="max-w-xl mx-auto text-center">
+        <p className="text-luxe-gold text-xs tracking-[0.35em] uppercase mb-4">
+          Stay Connected
+        </p>
+        <h2 className="font-serif text-3xl md:text-4xl font-bold text-white uppercase tracking-wider mb-4">
+          Join the LuxeWear Circle
         </h2>
-        <p className="text-green-100 mt-2 mb-6 text-sm">
-          Subscribe and save up to 30% on your weekly groceries. We promise zero
-          spam.
+        <p className="text-white/50 text-sm tracking-wide mb-10">
+          Be the first to discover new collections, exclusive offers, and
+          insider style guides.
         </p>
 
         {submitted ? (
-          <div
-            className="bg-white/20 backdrop-blur rounded-2xl px-6 py-4 text-white font-semibold"
+          <p
+            className="text-luxe-gold font-semibold tracking-widest uppercase text-sm"
             data-ocid="newsletter.success_state"
           >
-            🎉 You're subscribed! Welcome to the FreshCart family.
-          </div>
+            Welcome to the circle ✦
+          </p>
         ) : (
-          <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-0"
+            data-ocid="newsletter.panel"
+          >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
+              placeholder="Your email address"
               required
-              className="flex-1 px-5 py-3 rounded-full text-sm bg-white/15 backdrop-blur border border-white/30 text-white placeholder-green-100 focus:outline-none focus:ring-2 focus:ring-white/40"
+              className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 px-5 py-3 text-xs tracking-wider focus:outline-none focus:border-luxe-gold transition-colors"
               data-ocid="newsletter.input"
             />
             <button
               type="submit"
-              className="bg-white text-green-600 font-bold px-6 py-3 rounded-full hover:scale-105 transition-transform flex-shrink-0 text-sm shadow"
+              className="gold-btn px-8 py-3 text-xs font-bold tracking-[0.25em] uppercase shrink-0"
               data-ocid="newsletter.submit_button"
             >
               Subscribe
             </button>
           </form>
         )}
-
-        <p className="text-green-100/70 text-xs mt-4">
-          No spam, ever. Unsubscribe at any time.
-        </p>
       </div>
     </section>
   );

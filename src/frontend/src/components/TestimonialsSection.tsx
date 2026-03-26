@@ -1,88 +1,82 @@
 import { Star } from "lucide-react";
 
-const REVIEWS = [
+const TESTIMONIALS = [
   {
-    id: "priya",
     name: "Priya Sharma",
-    location: "Bengaluru, Karnataka",
+    role: "Fashion Editor",
+    text: "LuxeWear has completely transformed my wardrobe. The quality of their cashmere pieces is unmatched — every garment feels like a second skin.",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80",
     rating: 5,
-    text: "FreshCart is my go-to for groceries! The vegetables are always super fresh — you can tell they source directly from farms. Delivered in under 30 minutes!",
-    initial: "PS",
-    color: "bg-green-100 text-green-700",
   },
   {
-    id: "rahul",
-    name: "Rahul Verma",
-    location: "Mumbai, Maharashtra",
+    name: "Arjun Mehta",
+    role: "Creative Director",
+    text: "From the packaging to the fit, LuxeWear is an experience. I've been exclusively wearing their tailored collection for two seasons now.",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80",
     rating: 5,
-    text: "Switched from the local store to FreshCart and never looked back. The prices are unbeatable and the quality is consistently excellent. Love the 1-hour delivery!",
-    initial: "RV",
-    color: "bg-orange-100 text-orange-700",
   },
   {
-    id: "anjali",
-    name: "Anjali Nair",
-    location: "Chennai, Tamil Nadu",
+    name: "Ananya Desai",
+    role: "Style Consultant",
+    text: "My clients always ask where I source such refined pieces. LuxeWear is my best-kept secret — though perhaps not for much longer.",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80",
     rating: 5,
-    text: "The organic range is fantastic! Everything is certified and you can taste the difference. The packaging is eco-friendly too — great initiative by FreshCart.",
-    initial: "AN",
-    color: "bg-teal-100 text-teal-700",
   },
 ];
 
-const STAR_IDS = ["s1", "s2", "s3", "s4", "s5"];
+const STAR_POSITIONS = [1, 2, 3, 4, 5];
 
 export default function TestimonialsSection() {
   return (
     <section
-      className="py-14 bg-fresh-section"
+      className="py-20 px-4 md:px-8 bg-luxe-cream"
+      aria-label="Customer testimonials"
       data-ocid="testimonials.section"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10">
-          <span className="text-xs font-bold text-fresh-green uppercase tracking-widest">
-            Reviews
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mt-1 font-display">
-            What Our Customers Say
-          </h2>
-          <p className="text-muted-foreground text-sm mt-2">
-            Trusted by 50,000+ happy customers across India
+      <div className="max-w-screen-xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-xs tracking-[0.35em] text-luxe-gold uppercase mb-3">
+            What They Say
           </p>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-luxe-charcoal-mid uppercase tracking-wider">
+            Client Stories
+          </h2>
+          <div className="w-12 h-px bg-luxe-gold mx-auto mt-5" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {REVIEWS.map((review, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {TESTIMONIALS.map((t, i) => (
             <div
-              key={review.id}
-              className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow"
+              key={t.name}
+              className="bg-white p-8 flex flex-col"
               data-ocid={`testimonials.item.${i + 1}`}
             >
               <div className="flex gap-1 mb-4">
-                {STAR_IDS.slice(0, review.rating).map((sid) => (
+                {STAR_POSITIONS.slice(0, t.rating).map((pos) => (
                   <Star
-                    key={sid}
-                    className="w-4 h-4 fill-amber-400 text-amber-400"
+                    key={`${t.name}-star-${pos}`}
+                    className="w-3.5 h-3.5 fill-luxe-gold text-luxe-gold"
                   />
                 ))}
               </div>
-
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                "{review.text}"
+              <p className="text-sm text-luxe-secondary leading-relaxed italic mb-6 flex-1">
+                &ldquo;{t.text}&rdquo;
               </p>
-
-              <div className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${review.color}`}
-                >
-                  {review.initial}
-                </div>
+              <div className="flex items-center gap-3 border-t border-gray-100 pt-5">
+                <img
+                  src={t.avatar}
+                  alt={t.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
                 <div>
-                  <p className="text-sm font-semibold text-foreground">
-                    {review.name}
+                  <p className="text-xs font-semibold text-luxe-charcoal-mid tracking-wider uppercase">
+                    {t.name}
                   </p>
-                  <p className="text-xs text-muted-foreground">
-                    {review.location}
+                  <p className="text-[10px] text-luxe-secondary tracking-wider mt-0.5">
+                    {t.role}
                   </p>
                 </div>
               </div>

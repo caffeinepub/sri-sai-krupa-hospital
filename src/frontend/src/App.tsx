@@ -1,7 +1,8 @@
 import { useState } from "react";
 import CartDrawer from "./components/CartDrawer";
 import CategoryStrip from "./components/CategoryStrip";
-import DealsSection from "./components/DealsSection";
+import EditorialSection from "./components/EditorialSection";
+import FeaturedCollections from "./components/FeaturedCollections";
 import Footer from "./components/Footer";
 import HeroBanner from "./components/HeroBanner";
 import Navbar from "./components/Navbar";
@@ -16,15 +17,21 @@ export default function App() {
 
   return (
     <CartProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-white">
         <Navbar onCartClick={() => setCartOpen(true)} />
         <HeroBanner />
         <CategoryStrip
           selectedCategory={selectedCategory}
           onSelect={setSelectedCategory}
         />
-        <ProductGrid selectedCategory={selectedCategory} />
-        <DealsSection />
+        <section
+          id="new-arrivals"
+          className="py-16 px-4 md:px-8 max-w-screen-xl mx-auto"
+        >
+          <ProductGrid selectedCategory={selectedCategory} />
+        </section>
+        <EditorialSection />
+        <FeaturedCollections />
         <TestimonialsSection />
         <NewsletterSection />
         <Footer />

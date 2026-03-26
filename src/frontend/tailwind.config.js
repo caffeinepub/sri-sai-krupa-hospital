@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Plus Jakarta Sans'", "sans-serif"],
-        display: ["'Figtree'", "'Plus Jakarta Sans'", "sans-serif"],
+        sans: ["'Inter'", "sans-serif"],
+        serif: ["'Playfair Display'", "Georgia", "serif"],
+        display: ["'Playfair Display'", "Georgia", "serif"],
       },
       colors: {
         border: "oklch(var(--border))",
@@ -26,7 +27,6 @@ export default {
         primary: {
           DEFAULT: "oklch(var(--primary) / <alpha-value>)",
           foreground: "oklch(var(--primary-foreground))",
-          dark: "oklch(var(--primary-dark))",
         },
         secondary: {
           DEFAULT: "oklch(var(--secondary) / <alpha-value>)",
@@ -52,15 +52,14 @@ export default {
           DEFAULT: "oklch(var(--card))",
           foreground: "oklch(var(--card-foreground))",
         },
-        fresh: {
-          green: "oklch(var(--green))",
-          "green-dark": "oklch(var(--green-dark))",
-          "green-light": "oklch(var(--green-light))",
-          "green-mid": "oklch(var(--green-mid))",
-          orange: "oklch(var(--orange))",
-          "orange-light": "oklch(var(--orange-light))",
-          teal: "oklch(var(--teal))",
-          section: "oklch(var(--section-bg))",
+        luxe: {
+          charcoal: "oklch(var(--charcoal))",
+          "charcoal-mid": "oklch(var(--charcoal-mid))",
+          gold: "oklch(var(--gold))",
+          "gold-dark": "oklch(var(--gold-dark))",
+          "gold-light": "oklch(var(--gold-light))",
+          cream: "oklch(var(--cream))",
+          secondary: "oklch(var(--text-secondary))",
         },
         chart: {
           1: "oklch(var(--chart-1))",
@@ -82,21 +81,21 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        xl: "1rem",
-        "2xl": "1.5rem",
+        md: "var(--radius)",
+        sm: "var(--radius)",
+        xl: "4px",
+        "2xl": "8px",
       },
       boxShadow: {
-        card: "0 2px 16px oklch(0.18 0.018 264 / 0.07)",
-        "card-hover": "0 16px 40px oklch(0.72 0.2 145 / 0.15)",
-        navbar: "0 2px 12px oklch(0.18 0.018 264 / 0.08)",
+        card: "0 2px 16px oklch(0.15 0.003 264 / 0.07)",
+        "card-hover": "0 20px 50px oklch(0.15 0.003 264 / 0.14)",
+        navbar: "0 2px 12px oklch(0.15 0.003 264 / 0.4)",
+        gold: "0 4px 20px oklch(0.72 0.12 75 / 0.3)",
       },
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
         "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
         "badge-pulse": { "0%,100%": { transform: "scale(1)" }, "50%": { transform: "scale(1.3)" } },
-        shimmer: { "0%": { backgroundPosition: "-200% 0" }, "100%": { backgroundPosition: "200% 0" } },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

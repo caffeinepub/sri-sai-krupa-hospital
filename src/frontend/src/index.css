@@ -3,85 +3,75 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
-  font-weight: 300 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Figtree";
-  src: url("/assets/fonts/Figtree.woff2") format("woff2");
-  font-weight: 300 900;
+  font-family: "Playfair Display";
+  src: url("https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKd.woff2")
+    format("woff2");
+  font-weight: 400 800;
   font-display: swap;
 }
 
 @layer base {
   :root {
-    /* FreshCart — Fresh Green Grocery Theme */
+    /* LuxeWear — Luxury Fashion Theme */
     /* background: white */
     --background: 1 0 0;
-    --foreground: 0.18 0.018 264;
+    --foreground: 0.22 0.005 264;
 
-    --card: 1 0 0;
-    --card-foreground: 0.18 0.018 264;
+    --card: 0.95 0 0;
+    --card-foreground: 0.22 0.005 264;
 
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.018 264;
+    --popover-foreground: 0.22 0.005 264;
 
-    /* primary green #22c55e → oklch(0.72 0.2 145) */
-    --primary: 0.72 0.2 145;
+    /* primary: charcoal #1a1a1a → oklch(0.15 0.003 264) */
+    --primary: 0.15 0.003 264;
     --primary-foreground: 1 0 0;
 
-    /* dark green #16a34a */
-    --primary-dark: 0.63 0.19 145;
+    /* gold #c9a84c → oklch(0.72 0.12 75) */
+    --gold: 0.72 0.12 75;
+    --gold-dark: 0.62 0.12 75;
+    --gold-light: 0.94 0.05 75;
 
-    /* light green tint */
-    --secondary: 0.97 0.03 145;
-    --secondary-foreground: 0.63 0.19 145;
+    /* cream #faf8f5 → oklch(0.98 0.006 75) */
+    --cream: 0.98 0.006 75;
 
-    --muted: 0.97 0.005 264;
-    --muted-foreground: 0.48 0.014 264;
+    --secondary: 0.95 0 0;
+    --secondary-foreground: 0.22 0.005 264;
 
-    /* orange accent #f97316 → oklch(0.70 0.19 52) */
-    --accent: 0.7 0.19 52;
-    --accent-foreground: 1 0 0;
+    --muted: 0.96 0 0;
+    --muted-foreground: 0.52 0 0;
+
+    --accent: 0.72 0.12 75;
+    --accent-foreground: 0.15 0.003 264;
 
     --destructive: 0.58 0.22 25;
     --destructive-foreground: 1 0 0;
 
-    --border: 0.93 0.006 264;
-    --input: 0.93 0.006 264;
-    --ring: 0.72 0.2 145;
+    --border: 0.9 0 0;
+    --input: 0.9 0 0;
+    --ring: 0.72 0.12 75;
 
-    --radius: 0.75rem;
+    --radius: 0px;
 
-    /* Brand tokens */
-    --green: 0.72 0.2 145;
-    --green-dark: 0.63 0.19 145;
-    --green-light: 0.97 0.05 145;
-    --green-mid: 0.85 0.14 145;
-    --orange: 0.7 0.19 52;
-    --orange-light: 0.97 0.04 52;
-    --teal: 0.72 0.18 180;
-    --text-dark: 0.18 0.018 264;
-    --text-muted: 0.48 0.014 264;
-    --section-bg: 0.98 0.006 145;
+    /* charcoal */
+    --charcoal: 0.15 0.003 264;
+    --charcoal-mid: 0.22 0.005 264;
+    --text-secondary: 0.52 0 0;
 
-    --chart-1: 0.72 0.2 145;
-    --chart-2: 0.7 0.19 52;
-    --chart-3: 0.72 0.18 180;
+    --chart-1: 0.72 0.12 75;
+    --chart-2: 0.15 0.003 264;
+    --chart-3: 0.52 0 0;
     --chart-4: 0.58 0.22 25;
     --chart-5: 0.62 0.14 310;
 
-    --sidebar: 0.63 0.19 145;
+    --sidebar: 0.15 0.003 264;
     --sidebar-foreground: 1 0 0;
-    --sidebar-primary: 0.72 0.2 145;
-    --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.68 0.18 145;
+    --sidebar-primary: 0.72 0.12 75;
+    --sidebar-primary-foreground: 0.15 0.003 264;
+    --sidebar-accent: 0.22 0.005 264;
     --sidebar-accent-foreground: 1 0 0;
-    --sidebar-border: 0.6 0.17 145;
-    --sidebar-ring: 0.72 0.2 145;
+    --sidebar-border: 0.25 0.005 264;
+    --sidebar-ring: 0.72 0.12 75;
   }
 }
 
@@ -100,17 +90,17 @@
 
 /* ===== Product card ===== */
 .product-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px oklch(var(--green) / 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px oklch(0.15 0.003 264 / 0.14);
 }
 .product-card img {
   transition: transform 0.4s ease;
 }
 .product-card:hover img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 /* ===== Cart drawer ===== */
@@ -118,7 +108,7 @@
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== Badge pulse ===== */
+/* ===== Badge pop ===== */
 @keyframes badge-pop {
   0% {
     transform: scale(1);
@@ -138,7 +128,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -146,10 +136,25 @@
   }
 }
 .fade-in-up {
-  animation: fadeInUp 0.5s ease forwards;
+  animation: fadeInUp 0.6s ease forwards;
 }
 
-/* ===== Category strip ===== */
+/* ===== Hero slide ===== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.slide-in {
+  animation: slideIn 0.6s ease forwards;
+}
+
+/* ===== Category strip scrollbar ===== */
 .category-strip::-webkit-scrollbar {
   display: none;
 }
@@ -158,32 +163,33 @@
   scrollbar-width: none;
 }
 
-/* ===== Hero slide ===== */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-.slide-in {
-  animation: slideIn 0.5s ease forwards;
-}
-
 /* ===== Custom scrollbar ===== */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: oklch(var(--section-bg));
+  background: oklch(var(--cream));
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(var(--green-mid));
+  background: oklch(var(--gold));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(var(--green));
+  background: oklch(var(--gold-dark));
+}
+
+/* ===== Playfair font utility ===== */
+.font-playfair {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+/* ===== Gold shimmer hover ===== */
+.gold-btn {
+  background: oklch(var(--gold));
+  color: oklch(var(--charcoal));
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.gold-btn:hover {
+  background: oklch(var(--gold-dark));
+  transform: translateY(-1px);
 }

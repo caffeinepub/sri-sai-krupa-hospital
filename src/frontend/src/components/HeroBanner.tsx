@@ -1,141 +1,128 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SLIDES = [
   {
-    id: 1,
-    title: "Fresh Vegetables",
-    subtitle: "& Fruits",
-    desc: "Farm-to-door freshness guaranteed. Order before 10 AM for same-day delivery!",
-    cta: "Shop Now",
-    badge: "New Arrivals 🌱",
-    gradient: "from-emerald-500 via-green-400 to-teal-500",
+    id: "slide-arrivals",
     image:
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80",
+    kicker: "NEW SEASON ARRIVALS",
+    headline: "LuxeWear\nCollection.",
+    sub: "DISCOVER THE ART OF MODERN LUXURY.",
+    cta: "SHOP NOW",
   },
   {
-    id: 2,
-    title: "Free Delivery",
-    subtitle: "on First Order",
-    desc: "No minimum order value. Get your groceries delivered in 30 minutes flat.",
-    cta: "Order Now",
-    badge: "Limited Offer 🚀",
-    gradient: "from-orange-400 via-amber-400 to-yellow-400",
+    id: "slide-elegance",
     image:
-      "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=600&q=80",
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
+    kicker: "ELEVATE YOUR STYLE",
+    headline: "Timeless\nElegance.",
+    sub: "PREMIUM PIECES CURATED FOR YOU.",
+    cta: "EXPLORE",
   },
   {
-    id: 3,
-    title: "Organic Products",
-    subtitle: "20% Off Today",
-    desc: "Certified organic produce. No pesticides, no chemicals — just pure goodness.",
-    cta: "Explore",
-    badge: "Organic Certified 🌿",
-    gradient: "from-teal-500 via-cyan-400 to-sky-400",
+    id: "slide-winter",
     image:
-      "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80",
+      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=80",
+    kicker: "THE WINTER EDIT",
+    headline: "Crafted for\nCold Nights.",
+    sub: "LUXURY COATS & KNITWEAR AWAIT.",
+    cta: "VIEW COLLECTION",
   },
 ];
 
 export default function HeroBanner() {
   const [current, setCurrent] = useState(0);
-  const [animKey, setAnimKey] = useState(0);
-
-  const goTo = useCallback((idx: number) => {
-    setCurrent((idx + SLIDES.length) % SLIDES.length);
-    setAnimKey((k) => k + 1);
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => {
-        setAnimKey((k) => k + 1);
-        return (prev + 1) % SLIDES.length;
-      });
-    }, 4000);
+      setCurrent((prev) => (prev + 1) % SLIDES.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  const prev = () => setCurrent((c) => (c - 1 + SLIDES.length) % SLIDES.length);
+  const next = () => setCurrent((c) => (c + 1) % SLIDES.length);
 
   const slide = SLIDES[current];
 
   return (
     <section
-      className="mt-[104px] md:mt-16 relative overflow-hidden"
+      className="relative w-full h-[85vh] min-h-[560px] overflow-hidden"
+      aria-label="Hero banner"
       data-ocid="hero.section"
     >
-      <div
-        className={`relative bg-gradient-to-br ${slide.gradient} min-h-[340px] md:min-h-[420px] transition-all duration-500`}
-      >
-        {/* Background image overlay */}
+      {SLIDES.map((s, i) => (
         <div
-          className="absolute inset-0 opacity-20 bg-cover bg-center"
-          style={{ backgroundImage: `url(${slide.image})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+          key={s.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            i === current ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <img
+            src={s.image}
+            alt={s.headline}
+            className="w-full h-full object-cover object-top"
+            loading={i === 0 ? "eager" : "lazy"}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
+        </div>
+      ))}
 
-        <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-16 flex items-center">
-          <div key={animKey} className="slide-in flex-1 max-w-lg">
-            <span className="inline-block bg-white/25 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full mb-4">
-              {slide.badge}
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-display">
-              {slide.title}
-              <br />
-              <span className="text-white/90">{slide.subtitle}</span>
-            </h1>
-            <p className="mt-4 text-base md:text-lg text-white/85 max-w-sm">
-              {slide.desc}
-            </p>
-            <button
-              type="button"
-              className="mt-6 bg-white text-gray-800 font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-lg text-base"
-              data-ocid="hero.primary_button"
-            >
-              {slide.cta} →
-            </button>
-          </div>
-
-          <div
-            key={`img-${animKey}`}
-            className="hidden lg:block slide-in ml-auto"
+      <div className="relative z-10 h-full max-w-screen-xl mx-auto px-6 md:px-12 flex items-center">
+        <div key={current} className="slide-in max-w-xl">
+          <p className="text-luxe-gold text-xs font-medium tracking-[0.3em] uppercase mb-4">
+            {slide.kicker}
+          </p>
+          <h1 className="font-serif text-white text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 whitespace-pre-line">
+            {slide.headline}
+          </h1>
+          <p className="text-white/70 text-xs sm:text-sm tracking-[0.25em] uppercase mb-8">
+            {slide.sub}
+          </p>
+          <a
+            href="#new-arrivals"
+            className="gold-btn inline-block px-10 py-3 text-xs font-bold tracking-[0.25em] uppercase"
+            data-ocid="hero.primary_button"
           >
-            <img
-              src={slide.image}
-              alt={slide.title}
-              className="w-72 h-64 object-cover rounded-2xl shadow-2xl"
-            />
-          </div>
+            {slide.cta}
+          </a>
         </div>
+      </div>
 
-        <button
-          type="button"
-          onClick={() => goTo(current - 1)}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/25 hover:bg-white/50 text-white rounded-full p-2 transition-colors backdrop-blur"
-          data-ocid="hero.pagination_prev"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => goTo(current + 1)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/25 hover:bg-white/50 text-white rounded-full p-2 transition-colors backdrop-blur"
-          data-ocid="hero.pagination_next"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
+      <button
+        type="button"
+        onClick={prev}
+        aria-label="Previous slide"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/30 hover:bg-luxe-gold/80 text-white flex items-center justify-center transition-colors duration-300"
+        data-ocid="hero.secondary_button"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button
+        type="button"
+        onClick={next}
+        aria-label="Next slide"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/30 hover:bg-luxe-gold/80 text-white flex items-center justify-center transition-colors duration-300"
+        data-ocid="hero.secondary_button"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {SLIDES.map((s, i) => (
-            <button
-              type="button"
-              key={s.id}
-              onClick={() => goTo(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === current ? "w-6 bg-white" : "w-2 bg-white/50"
-              }`}
-            />
-          ))}
-        </div>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {SLIDES.map((s, i) => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => setCurrent(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`transition-all duration-300 ${
+              i === current
+                ? "w-8 h-1.5 bg-luxe-gold"
+                : "w-2 h-1.5 bg-white/40 hover:bg-white/70"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );

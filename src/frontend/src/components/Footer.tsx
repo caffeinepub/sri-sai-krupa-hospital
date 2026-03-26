@@ -1,134 +1,170 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Instagram, Twitter, Youtube } from "lucide-react";
+
+const PORTFOLIO_URL =
+  "https://broad-gold-ot9-draft.caffeine.xyz/#caffeineAdminToken=a58495c1b7d0a25ab215f901824198fac8b65ffb45c36ed2ce83cab5141dc9f2";
+
+const PROJECT_LINKS = [
+  {
+    label: "FreshCart – Grocery E-Commerce",
+    href: "https://broad-gold-ot9-draft.caffeine.xyz/#caffeineAdminToken=1dd7de9da5f1700ee5c877085f04a2438f0fdc0f0c016f80d080a89584da48c4",
+  },
+  {
+    label: "LuxeWear – Fashion Store",
+    href: "https://broad-gold-ot9-draft.caffeine.xyz/#caffeineAdminToken=a58495c1b7d0a25ab215f901824198fac8b65ffb45c36ed2ce83cab5141dc9f2",
+  },
+];
+
+const QUICK_LINKS = [
+  { label: "New Arrivals", href: "#new-arrivals" },
+  { label: "Women", href: "#new-arrivals" },
+  { label: "Men", href: "#new-arrivals" },
+  { label: "Accessories", href: "#new-arrivals" },
+  { label: "Sale", href: "#new-arrivals" },
+];
+
+const CARE_LINKS = [
+  { label: "Contact Us", href: "mailto:hello@luxewear.com" },
+  { label: "Size Guide", href: "#new-arrivals" },
+  { label: "Shipping & Returns", href: "#new-arrivals" },
+  { label: "FAQs", href: "#new-arrivals" },
+  { label: "Privacy Policy", href: "#new-arrivals" },
+];
+
+const SOCIALS = [
+  { Icon: Instagram, label: "Instagram", href: "https://instagram.com" },
+  { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+  { Icon: Youtube, label: "YouTube", href: "https://youtube.com" },
+];
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300" data-ocid="footer.section">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-gray-700">
+    <footer className="bg-luxe-charcoal" data-ocid="footer.section">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-8 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl">🛒</span>
-              <span className="text-xl font-bold text-white font-display">
-                FreshCart
-              </span>
-            </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              India's freshest grocery delivery. From farm to your doorstep in
-              30 minutes.
+            <h2 className="font-serif text-luxe-gold text-2xl font-bold tracking-widest uppercase mb-4">
+              LuxeWear
+            </h2>
+            <p className="text-white/50 text-xs leading-relaxed tracking-wider max-w-[200px] mb-4">
+              The art of modern luxury. Timeless fashion crafted with intention
+              for the discerning individual.
             </p>
-            <div className="flex gap-3 mt-4">
-              {(["FB", "IG", "TW"] as const).map((s) => (
-                <span
-                  key={s}
-                  className="w-9 h-9 rounded-full bg-gray-700 hover:bg-fresh-green transition-colors flex items-center justify-center text-xs font-bold text-white cursor-pointer"
-                >
-                  {s}
-                </span>
-              ))}
+            {/* Project links list */}
+            <div className="mb-4">
+              <p className="text-white/40 text-[9px] tracking-[0.2em] uppercase mb-2">
+                My Projects
+              </p>
+              <ul className="flex flex-col gap-2">
+                {PROJECT_LINKS.map((p) => (
+                  <li key={p.label}>
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-luxe-gold/70 text-xs tracking-wide hover:text-luxe-gold transition-colors"
+                      data-ocid="footer.link"
+                    >
+                      → {p.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
+            <a
+              href={PORTFOLIO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-5 py-2 border border-luxe-gold text-luxe-gold text-xs font-semibold tracking-widest uppercase hover:bg-luxe-gold hover:text-luxe-charcoal transition-all duration-300"
+              data-ocid="footer.link"
+            >
+              View My Portfolio
+            </a>
           </div>
 
-          {/* Quick links */}
+          {/* Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
+            <h3 className="text-white text-[10px] font-semibold tracking-[0.25em] uppercase mb-5">
               Quick Links
-            </h4>
-            <ul className="space-y-2">
-              {[
-                "Home",
-                "About Us",
-                "Our Products",
-                "Offers & Deals",
-                "Blog",
-                "Contact Us",
-              ].map((link) => (
-                <li key={link}>
-                  <span
-                    className="text-sm text-gray-400 hover:text-fresh-green transition-colors cursor-pointer"
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {QUICK_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-white/50 text-xs tracking-wider hover:text-luxe-gold transition-colors uppercase"
                     data-ocid="footer.link"
                   >
-                    {link}
-                  </span>
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* Customer Care */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
-              Categories
-            </h4>
-            <ul className="space-y-2">
-              {[
-                "Fresh Fruits",
-                "Vegetables",
-                "Dairy & Eggs",
-                "Bakery",
-                "Beverages",
-                "Organic",
-              ].map((cat) => (
-                <li key={cat}>
-                  <span
-                    className="text-sm text-gray-400 hover:text-fresh-green transition-colors cursor-pointer"
-                    data-ocid="footer.link"
+            <h3 className="text-white text-[10px] font-semibold tracking-[0.25em] uppercase mb-5">
+              Customer Care
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {CARE_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-white/50 text-xs tracking-wider hover:text-luxe-gold transition-colors uppercase"
                   >
-                    {cat}
-                  </span>
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Social */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
-              Contact Us
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-sm text-gray-400">
-                <Phone className="w-4 h-4 mt-0.5 flex-shrink-0 text-fresh-green" />
-                +91 1800 123 4567
-              </li>
-              <li className="flex items-start gap-2 text-sm text-gray-400">
-                <Mail className="w-4 h-4 mt-0.5 flex-shrink-0 text-fresh-green" />
-                support@freshcart.in
-              </li>
-              <li className="flex items-start gap-2 text-sm text-gray-400">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-fresh-green" />
-                Bengaluru, Karnataka, India
-              </li>
-            </ul>
-            <div className="mt-5 flex flex-col gap-1.5">
-              <p className="text-xs text-gray-500">Download the App</p>
-              <div className="flex gap-2">
-                <span className="border border-gray-600 rounded-lg px-3 py-1.5 text-xs text-gray-300 hover:border-fresh-green hover:text-fresh-green transition-colors cursor-pointer">
-                  App Store
-                </span>
-                <span className="border border-gray-600 rounded-lg px-3 py-1.5 text-xs text-gray-300 hover:border-fresh-green hover:text-fresh-green transition-colors cursor-pointer">
-                  Google Play
-                </span>
-              </div>
+            <h3 className="text-white text-[10px] font-semibold tracking-[0.25em] uppercase mb-5">
+              Follow Us
+            </h3>
+            <p className="text-white/50 text-xs tracking-wider mb-5">
+              Join our community for daily style inspiration.
+            </p>
+            <div className="flex gap-3 mb-8">
+              {SOCIALS.map(({ Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-9 h-9 border border-white/20 flex items-center justify-center text-luxe-gold hover:border-luxe-gold hover:bg-luxe-gold/10 transition-all duration-300"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
-          <span>© {year} FreshCart. All rights reserved.</span>
-          <span>
-            Built with ❤️ using{" "}
+      <div className="border-t border-white/10">
+        <div className="max-w-screen-xl mx-auto px-4 md:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-white/30 text-[10px] tracking-widest uppercase">
+            © {year} LuxeWear. All rights reserved.
+          </p>
+          <p className="text-white/30 text-[10px] tracking-widest">
+            Built with love using{" "}
             <a
               href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-fresh-green hover:underline"
+              className="text-luxe-gold/60 hover:text-luxe-gold transition-colors"
             >
               caffeine.ai
             </a>
-          </span>
+          </p>
         </div>
       </div>
     </footer>
