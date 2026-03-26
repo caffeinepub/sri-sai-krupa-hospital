@@ -65,7 +65,7 @@ export const PRODUCTS: Product[] = [
     unit: "12 pcs",
     discount: 17,
     image:
-      "https://images.unsplash.com/photo-1634483838745-5ee7b9c3b924?w=400&q=80",
+      "https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=400&q=80",
   },
   {
     id: 7,
