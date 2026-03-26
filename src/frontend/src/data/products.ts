@@ -65,7 +65,7 @@ export const PRODUCTS: Product[] = [
     unit: "12 pcs",
     discount: 17,
     image:
-      "https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80",
+      "https://images.unsplash.com/photo-1634483838745-5ee7b9c3b924?w=400&q=80",
   },
   {
     id: 7,
@@ -98,7 +98,7 @@ export const PRODUCTS: Product[] = [
     unit: "50g",
     discount: 14,
     image:
-      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",
+      "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80",
   },
   {
     id: 10,
