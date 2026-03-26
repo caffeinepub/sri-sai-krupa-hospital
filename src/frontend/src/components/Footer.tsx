@@ -52,22 +52,27 @@ export default function Footer() {
               The art of modern luxury. Timeless fashion crafted with intention
               for the discerning individual.
             </p>
-            {/* Project links list */}
+            {/* Business Website projects */}
             <div className="mb-4">
-              <p className="text-white/40 text-[9px] tracking-[0.2em] uppercase mb-2">
-                My Projects
+              <p className="text-white/40 text-[9px] tracking-[0.2em] uppercase mb-3">
+                Business Website
               </p>
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-3">
                 {PROJECT_LINKS.map((p) => (
                   <li key={p.label}>
                     <a
                       href={p.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-luxe-gold/70 text-xs tracking-wide hover:text-luxe-gold transition-colors"
+                      className="group flex items-center justify-between gap-2"
                       data-ocid="footer.link"
                     >
-                      → {p.label}
+                      <span className="text-white/60 text-xs tracking-wide group-hover:text-luxe-gold transition-colors truncate">
+                        {p.label}
+                      </span>
+                      <span className="shrink-0 text-[9px] font-semibold tracking-widest uppercase border border-luxe-gold/50 text-luxe-gold/70 group-hover:bg-luxe-gold group-hover:text-luxe-charcoal group-hover:border-luxe-gold px-2 py-0.5 transition-all duration-200">
+                        View Project
+                      </span>
                     </a>
                   </li>
                 ))}

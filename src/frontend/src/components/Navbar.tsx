@@ -110,9 +110,9 @@ export default function Navbar({ onCartClick }: NavbarProps) {
               </span>
             </button>
             {projectsOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-luxe-charcoal border border-luxe-gold/40 shadow-xl z-50">
+              <div className="absolute right-0 mt-2 w-72 bg-luxe-charcoal border border-luxe-gold/40 shadow-xl z-50">
                 <p className="text-white/40 text-[9px] tracking-[0.2em] uppercase px-4 pt-3 pb-1">
-                  My Projects
+                  Business Website
                 </p>
                 <ul>
                   {PROJECT_LINKS.map((p) => (
@@ -122,9 +122,12 @@ export default function Navbar({ onCartClick }: NavbarProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => setProjectsOpen(false)}
-                        className="block px-4 py-3 text-xs text-white/70 hover:text-luxe-gold hover:bg-white/5 tracking-wide transition-colors border-t border-white/10"
+                        className="flex items-center justify-between px-4 py-3 text-xs text-white/70 hover:text-luxe-gold hover:bg-white/5 tracking-wide transition-colors border-t border-white/10 group"
                       >
-                        {p.label}
+                        <span>{p.label}</span>
+                        <span className="text-[9px] font-semibold tracking-widest uppercase border border-luxe-gold/50 text-luxe-gold/70 group-hover:bg-luxe-gold group-hover:text-luxe-charcoal group-hover:border-luxe-gold px-2 py-0.5 transition-all duration-200">
+                          View Project
+                        </span>
                       </a>
                     </li>
                   ))}
@@ -175,7 +178,7 @@ export default function Navbar({ onCartClick }: NavbarProps) {
             </a>
           ))}
           <p className="text-white/40 text-[9px] tracking-[0.2em] uppercase pt-4 pb-1">
-            My Projects
+            Business Website
           </p>
           {PROJECT_LINKS.map((p) => (
             <a
@@ -184,9 +187,12 @@ export default function Navbar({ onCartClick }: NavbarProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="block text-white/70 hover:text-luxe-gold text-xs tracking-wide py-3 border-b border-white/10"
+              className="flex items-center justify-between text-white/70 hover:text-luxe-gold text-xs tracking-wide py-3 border-b border-white/10 group"
             >
-              {p.label}
+              <span>{p.label}</span>
+              <span className="text-[9px] font-semibold tracking-widest uppercase border border-luxe-gold/50 text-luxe-gold/70 group-hover:bg-luxe-gold group-hover:text-luxe-charcoal group-hover:border-luxe-gold px-2 py-0.5 transition-all duration-200">
+                View Project
+              </span>
             </a>
           ))}
           <a
