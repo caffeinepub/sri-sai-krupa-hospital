@@ -14,9 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Inter'", "sans-serif"],
-        serif: ["'Playfair Display'", "Georgia", "serif"],
-        display: ["'Playfair Display'", "Georgia", "serif"],
+        sans: ["'Figtree'", "system-ui", "sans-serif"],
+        display: ["'Bricolage Grotesque'", "system-ui", "sans-serif"],
       },
       colors: {
         border: "oklch(var(--border))",
@@ -52,14 +51,13 @@ export default {
           DEFAULT: "oklch(var(--card))",
           foreground: "oklch(var(--card-foreground))",
         },
-        luxe: {
-          charcoal: "oklch(var(--charcoal))",
-          "charcoal-mid": "oklch(var(--charcoal-mid))",
-          gold: "oklch(var(--gold))",
-          "gold-dark": "oklch(var(--gold-dark))",
-          "gold-light": "oklch(var(--gold-light))",
-          cream: "oklch(var(--cream))",
-          secondary: "oklch(var(--text-secondary))",
+        fresh: {
+          green: "oklch(var(--primary))",
+          "green-light": "oklch(var(--green-light))",
+          "green-mid": "oklch(var(--green-mid))",
+          "green-dark": "oklch(var(--green-dark))",
+          orange: "oklch(var(--orange))",
+          "orange-light": "oklch(var(--orange-light))",
         },
         chart: {
           1: "oklch(var(--chart-1))",
@@ -81,16 +79,16 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "var(--radius)",
-        sm: "var(--radius)",
-        xl: "4px",
-        "2xl": "8px",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        xl: "14px",
+        "2xl": "20px",
       },
       boxShadow: {
-        card: "0 2px 16px oklch(0.15 0.003 264 / 0.07)",
-        "card-hover": "0 20px 50px oklch(0.15 0.003 264 / 0.14)",
-        navbar: "0 2px 12px oklch(0.15 0.003 264 / 0.4)",
-        gold: "0 4px 20px oklch(0.72 0.12 75 / 0.3)",
+        card: "0 2px 12px oklch(0.59 0.17 145 / 0.07)",
+        "card-hover": "0 20px 40px oklch(0.59 0.17 145 / 0.15)",
+        navbar: "0 2px 16px oklch(0.2 0.01 152 / 0.12)",
+        green: "0 4px 20px oklch(0.59 0.17 145 / 0.3)",
       },
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },

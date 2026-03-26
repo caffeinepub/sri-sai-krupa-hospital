@@ -1,120 +1,76 @@
-import { Heart, ShoppingBag } from "lucide-react";
-import { useState } from "react";
-import { type FashionProduct, useCart } from "../context/CartContext";
+import { Button } from "@/components/ui/button";
+import { Minus, Plus } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import type { GroceryProduct } from "../context/CartContext";
 
 interface ProductCardProps {
-  product: FashionProduct;
+  product: GroceryProduct;
   index: number;
 }
 
 export default function ProductCard({ product, index }: ProductCardProps) {
-  const { addToCart, isInCart } = useCart();
-  const [wished, setWished] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const { addToCart, updateQuantity, isInCart, getQuantity } = useCart();
   const inCart = isInCart(product.id);
-
-  const discount = product.isSale
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100,
-      )
-    : 0;
+  const qty = getQuantity(product.id);
 
   return (
     <div
-      className="product-card bg-card flex flex-col group"
-      data-ocid={`product.item.${index + 1}`}
+      className="product-card bg-card rounded-xl border border-border overflow-hidden group"
+      data-ocid={`products.item.${index + 1}`}
     >
-      {/* Image */}
-      <div
-        className="relative overflow-hidden bg-gray-100"
-        style={{ aspectRatio: "3/4" }}
-      >
+      <div className="relative overflow-hidden h-44">
         <img
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {product.isNew && (
-            <span className="bg-luxe-charcoal text-white text-[9px] font-bold tracking-widest px-2.5 py-1 uppercase">
-              New
-            </span>
-          )}
-          {product.isSale && (
-            <span className="bg-luxe-gold text-luxe-charcoal text-[9px] font-bold tracking-widest px-2.5 py-1 uppercase">
-              -{discount}%
-            </span>
-          )}
-        </div>
-        {/* Wishlist */}
-        <button
-          type="button"
-          onClick={() => setWished((v) => !v)}
-          aria-label="Add to wishlist"
-          className="absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white flex items-center justify-center transition-colors duration-200 opacity-0 group-hover:opacity-100"
-          data-ocid={`product.toggle.${index + 1}`}
-        >
-          <Heart
-            className={`w-4 h-4 transition-colors ${
-              wished ? "fill-red-500 text-red-500" : "text-luxe-charcoal"
-            }`}
-          />
-        </button>
+        <span className="absolute top-2 left-2 bg-fresh-green-light text-primary text-xs font-bold px-2 py-0.5 rounded-full">
+          {product.category}
+        </span>
       </div>
 
-      {/* Info */}
-      <div className="p-4 flex flex-col flex-1">
-        <p className="text-[10px] tracking-widest text-luxe-secondary uppercase mb-1">
-          {product.category}
-        </p>
-        <h3 className="text-sm font-semibold text-luxe-charcoal-mid mb-2 line-clamp-1">
+      <div className="p-3">
+        <h3 className="font-semibold text-foreground text-sm mb-1 leading-snug">
           {product.name}
         </h3>
-        <div className="flex items-center gap-2 mb-3">
-          <span className="font-semibold text-luxe-charcoal-mid text-sm">
-            ₹{product.price.toLocaleString()}
-          </span>
-          {product.isSale && (
-            <span className="text-luxe-secondary text-xs line-through">
-              ₹{product.originalPrice.toLocaleString()}
+        <p className="text-primary font-bold text-base mb-3">
+          ₹{product.price}
+        </p>
+
+        {inCart ? (
+          <div className="flex items-center justify-between bg-muted rounded-lg px-2 py-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7 text-primary hover:bg-fresh-green-light"
+              onClick={() => updateQuantity(product.id, qty - 1)}
+              data-ocid={`products.secondary_button.${index + 1}`}
+            >
+              <Minus className="w-3.5 h-3.5" />
+            </Button>
+            <span className="font-bold text-foreground text-sm w-5 text-center">
+              {qty}
             </span>
-          )}
-        </div>
-
-        {/* Color swatches */}
-        <div className="flex items-center gap-1.5 mb-4">
-          {product.colors.map((color) => (
-            <button
-              key={color}
-              type="button"
-              onClick={() => setSelectedColor(color)}
-              aria-label={`Color ${color}`}
-              style={{ backgroundColor: color }}
-              className={`w-4 h-4 rounded-full border-2 transition-all ${
-                selectedColor === color
-                  ? "border-luxe-charcoal scale-125"
-                  : "border-transparent hover:scale-110"
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Add to Cart */}
-        <button
-          type="button"
-          onClick={() => addToCart(product, selectedColor)}
-          className={`mt-auto w-full py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-2 ${
-            inCart
-              ? "bg-luxe-gold text-luxe-charcoal"
-              : "bg-luxe-charcoal text-white hover:bg-luxe-gold hover:text-luxe-charcoal"
-          }`}
-          data-ocid={`product.button.${index + 1}`}
-        >
-          <ShoppingBag className="w-3.5 h-3.5" />
-          {inCart ? "In Cart" : "Add to Cart"}
-        </button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7 text-primary hover:bg-fresh-green-light"
+              onClick={() => addToCart(product)}
+              data-ocid={`products.primary_button.${index + 1}`}
+            >
+              <Plus className="w-3.5 h-3.5" />
+            </Button>
+          </div>
+        ) : (
+          <Button
+            className="w-full h-9 bg-primary text-primary-foreground hover:bg-fresh-green-dark rounded-lg text-sm font-semibold"
+            onClick={() => addToCart(product)}
+            data-ocid={`products.primary_button.${index + 1}`}
+          >
+            <Plus className="w-3.5 h-3.5 mr-1" /> Add
+          </Button>
+        )}
       </div>
     </div>
   );

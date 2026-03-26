@@ -1,33 +1,39 @@
+import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const SLIDES = [
   {
-    id: "slide-arrivals",
+    id: 1,
+    title: "Fresh Fruits & Veggies",
+    subtitle: "Farm-to-table goodness delivered to your door in under 2 hours.",
+    cta: "Shop Now",
+    badge: "🍎 Freshness Guaranteed",
+    gradient: "from-emerald-700 via-green-600 to-teal-500",
     image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80",
-    kicker: "NEW SEASON ARRIVALS",
-    headline: "LuxeWear\nCollection.",
-    sub: "DISCOVER THE ART OF MODERN LUXURY.",
-    cta: "SHOP NOW",
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=900&q=80",
   },
   {
-    id: "slide-elegance",
+    id: 2,
+    title: "Dairy & Bakery Essentials",
+    subtitle:
+      "Premium milk, artisan bread, and farm eggs — every morning staple you need.",
+    cta: "Explore Now",
+    badge: "🥛 Farm Fresh Daily",
+    gradient: "from-green-800 via-emerald-600 to-green-400",
     image:
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
-    kicker: "ELEVATE YOUR STYLE",
-    headline: "Timeless\nElegance.",
-    sub: "PREMIUM PIECES CURATED FOR YOU.",
-    cta: "EXPLORE",
+      "https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=900&q=80",
   },
   {
-    id: "slide-winter",
+    id: 3,
+    title: "Snacks & Beverages",
+    subtitle:
+      "Stock up on your favourite drinks, teas, juices, and healthy snacks.",
+    cta: "Shop Deals",
+    badge: "🧃 Big Savings Today",
+    gradient: "from-teal-700 via-green-600 to-emerald-500",
     image:
-      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=80",
-    kicker: "THE WINTER EDIT",
-    headline: "Crafted for\nCold Nights.",
-    sub: "LUXURY COATS & KNITWEAR AWAIT.",
-    cta: "VIEW COLLECTION",
+      "https://images.unsplash.com/photo-1542838132-92c53300491e?w=900&q=80",
   },
 ];
 
@@ -37,7 +43,7 @@ export default function HeroBanner() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % SLIDES.length);
-    }, 5000);
+    }, 4500);
     return () => clearInterval(timer);
   }, []);
 
@@ -48,79 +54,76 @@ export default function HeroBanner() {
 
   return (
     <section
-      className="relative w-full h-[85vh] min-h-[560px] overflow-hidden"
-      aria-label="Hero banner"
-      data-ocid="hero.section"
+      className="relative overflow-hidden"
+      style={{ minHeight: "420px" }}
     >
-      {SLIDES.map((s, i) => (
-        <div
-          key={s.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            i === current ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <img
-            src={s.image}
-            alt={s.headline}
-            className="w-full h-full object-cover object-top"
-            loading={i === 0 ? "eager" : "lazy"}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
-        </div>
-      ))}
-
-      <div className="relative z-10 h-full max-w-screen-xl mx-auto px-6 md:px-12 flex items-center">
-        <div key={current} className="slide-in max-w-xl">
-          <p className="text-luxe-gold text-xs font-medium tracking-[0.3em] uppercase mb-4">
-            {slide.kicker}
-          </p>
-          <h1 className="font-serif text-white text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 whitespace-pre-line">
-            {slide.headline}
-          </h1>
-          <p className="text-white/70 text-xs sm:text-sm tracking-[0.25em] uppercase mb-8">
-            {slide.sub}
-          </p>
-          <a
-            href="#new-arrivals"
-            className="gold-btn inline-block px-10 py-3 text-xs font-bold tracking-[0.25em] uppercase"
-            data-ocid="hero.primary_button"
-          >
-            {slide.cta}
-          </a>
+      <div
+        key={slide.id}
+        className={`bg-gradient-to-r ${slide.gradient} min-h-[420px] md:min-h-[480px] flex items-center`}
+      >
+        <div className="max-w-screen-xl mx-auto px-6 md:px-12 w-full flex items-center justify-between gap-8">
+          <div className="max-w-lg slide-in">
+            <span className="inline-block bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              {slide.badge}
+            </span>
+            <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-4">
+              {slide.title}
+            </h1>
+            <p className="text-white/85 text-lg mb-7 leading-relaxed">
+              {slide.subtitle}
+            </p>
+            <Button
+              size="lg"
+              className="bg-white text-primary hover:bg-white/90 font-bold rounded-full px-8"
+              onClick={() =>
+                document
+                  .getElementById("products")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              data-ocid="hero.primary_button"
+            >
+              {slide.cta}
+            </Button>
+          </div>
+          <div className="hidden md:block rounded-2xl overflow-hidden shadow-2xl w-[380px] h-[300px] shrink-0">
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
+      {/* Controls */}
       <button
         type="button"
         onClick={prev}
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
         aria-label="Previous slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/30 hover:bg-luxe-gold/80 text-white flex items-center justify-center transition-colors duration-300"
-        data-ocid="hero.secondary_button"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
       <button
         type="button"
         onClick={next}
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
         aria-label="Next slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black/30 hover:bg-luxe-gold/80 text-white flex items-center justify-center transition-colors duration-300"
-        data-ocid="hero.secondary_button"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {SLIDES.map((s, i) => (
+      {/* Dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {SLIDES.map((s) => (
           <button
-            key={s.id}
             type="button"
-            onClick={() => setCurrent(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`transition-all duration-300 ${
-              i === current
-                ? "w-8 h-1.5 bg-luxe-gold"
-                : "w-2 h-1.5 bg-white/40 hover:bg-white/70"
+            key={s.id}
+            onClick={() => setCurrent(SLIDES.indexOf(s))}
+            className={`w-2.5 h-2.5 rounded-full transition-all ${
+              s.id === SLIDES[current].id ? "bg-white w-6" : "bg-white/40"
             }`}
+            aria-label={`Go to slide ${s.id}`}
           />
         ))}
       </div>

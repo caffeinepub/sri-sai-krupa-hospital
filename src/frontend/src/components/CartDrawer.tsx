@@ -1,4 +1,5 @@
-import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 interface CartDrawerProps {
@@ -9,184 +10,151 @@ interface CartDrawerProps {
 export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const {
     cartItems,
-    cartCount,
     cartTotal,
+    cartCount,
     updateQuantity,
     removeFromCart,
     clearCart,
   } = useCart();
 
-  const handleCheckout = () => {
-    alert("Thank you for shopping with LuxeWear. Your order has been placed.");
-    clearCart();
-    onClose();
-  };
-
   return (
     <>
-      {/* Backdrop */}
-      <div
-        className={`fixed inset-0 bg-black/60 z-50 transition-opacity duration-300 ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={onClose}
-        onKeyUp={(e) => e.key === "Escape" && onClose()}
-        role="button"
-        tabIndex={-1}
-        aria-label="Close cart"
-        data-ocid="cart.modal"
-      />
+      {/* Overlay */}
+      {isOpen && (
+        <div
+          role="button"
+          tabIndex={0}
+          className="fixed inset-0 bg-black/40 z-50 backdrop-blur-sm"
+          onClick={onClose}
+          onKeyDown={(e) => e.key === "Escape" && onClose()}
+          data-ocid="cart.modal"
+          aria-label="Close cart"
+        />
+      )}
 
       {/* Drawer */}
       <div
-        className={`fixed right-0 top-0 bottom-0 w-full sm:w-96 bg-white z-50 shadow-2xl cart-drawer flex flex-col ${
+        className={`cart-drawer fixed top-0 right-0 h-full w-full max-w-sm bg-background z-50 shadow-2xl flex flex-col ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         data-ocid="cart.sheet"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-          <h2 className="font-serif text-lg font-semibold text-luxe-charcoal-mid tracking-widest uppercase">
-            Your Bag
-            <span className="ml-2 text-xs font-normal font-sans text-luxe-secondary">
-              ({cartCount})
-            </span>
-          </h2>
-          <button
-            type="button"
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+          <div className="flex items-center gap-2">
+            <ShoppingBag className="w-5 h-5 text-primary" />
+            <h2 className="font-display font-bold text-lg">Your Cart</h2>
+            {cartCount > 0 && (
+              <span className="bg-primary text-primary-foreground text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
+            className="h-8 w-8"
             data-ocid="cart.close_button"
           >
             <X className="w-4 h-4" />
-          </button>
+          </Button>
         </div>
 
-        {/* Content */}
-        {cartItems.length === 0 ? (
-          <div
-            className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-6"
-            data-ocid="cart.empty_state"
-          >
-            <ShoppingBag className="w-14 h-14 text-gray-200" />
-            <div>
-              <p className="font-serif text-lg text-luxe-charcoal-mid">
-                Your bag is empty
-              </p>
-              <p className="text-xs text-luxe-secondary mt-1 tracking-wider">
-                Discover our latest arrivals
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="gold-btn px-8 py-2.5 text-xs font-bold tracking-widest uppercase"
-              data-ocid="cart.primary_button"
+        {/* Items */}
+        <div className="flex-1 overflow-y-auto px-5 py-4">
+          {cartItems.length === 0 ? (
+            <div
+              className="flex flex-col items-center justify-center h-full text-center text-muted-foreground"
+              data-ocid="cart.empty_state"
             >
-              Continue Shopping
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="flex-1 overflow-y-auto">
+              <span className="text-5xl mb-4">🛒</span>
+              <p className="font-semibold text-lg">Your cart is empty</p>
+              <p className="text-sm mt-1">Add some fresh groceries!</p>
+            </div>
+          ) : (
+            <ul className="space-y-4" data-ocid="cart.list">
               {cartItems.map((item, i) => (
-                <div
+                <li
                   key={item.id}
-                  className="flex gap-4 px-6 py-4 border-b border-gray-50"
+                  className="flex gap-3 items-center"
                   data-ocid={`cart.item.${i + 1}`}
                 >
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-16 h-20 object-cover bg-gray-100 flex-shrink-0"
+                    className="w-14 h-14 rounded-lg object-cover shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-luxe-charcoal-mid uppercase tracking-wider line-clamp-2">
+                    <p className="font-semibold text-sm truncate">
                       {item.name}
                     </p>
-                    {item.selectedColor && (
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <div
-                          className="w-3 h-3 rounded-full border border-gray-300"
-                          style={{ backgroundColor: item.selectedColor }}
-                        />
-                        <span className="text-[10px] text-luxe-secondary">
-                          Color selected
-                        </span>
-                      </div>
-                    )}
-                    <p className="text-sm font-semibold text-luxe-charcoal-mid mt-2">
-                      ₹{(item.price * item.quantity).toLocaleString()}
+                    <p className="text-primary font-bold text-sm">
+                      ₹{item.price}
                     </p>
-                    <div className="flex items-center gap-3 mt-3">
-                      <div className="flex items-center border border-gray-200">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
-                          }
-                          className="w-7 h-7 flex items-center justify-center hover:bg-luxe-charcoal hover:text-white transition-colors text-luxe-secondary"
-                        >
-                          <Minus className="w-3 h-3" />
-                        </button>
-                        <span className="w-7 text-center text-xs font-semibold">
-                          {item.quantity}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
-                          }
-                          className="w-7 h-7 flex items-center justify-center hover:bg-luxe-charcoal hover:text-white transition-colors text-luxe-secondary"
-                        >
-                          <Plus className="w-3 h-3" />
-                        </button>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-luxe-secondary hover:text-red-500 transition-colors"
-                        data-ocid={`cart.delete_button.${i + 1}`}
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
                   </div>
-                </div>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-7 w-7"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      data-ocid={`cart.secondary_button.${i + 1}`}
+                    >
+                      <Minus className="w-3 h-3" />
+                    </Button>
+                    <span className="w-6 text-center font-semibold text-sm">
+                      {item.quantity}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-7 w-7"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      data-ocid={`cart.primary_button.${i + 1}`}
+                    >
+                      <Plus className="w-3 h-3" />
+                    </Button>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 text-destructive hover:text-destructive"
+                    onClick={() => removeFromCart(item.id)}
+                    data-ocid={`cart.delete_button.${i + 1}`}
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </Button>
+                </li>
               ))}
-            </div>
+            </ul>
+          )}
+        </div>
 
-            <div className="border-t border-gray-100 px-6 py-5">
-              <div className="flex justify-between text-xs text-luxe-secondary mb-2 tracking-wider uppercase">
-                <span>Subtotal</span>
-                <span className="font-semibold text-luxe-charcoal-mid">
-                  ₹{cartTotal.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-xs text-luxe-secondary mb-5 tracking-wider uppercase">
-                <span>Shipping</span>
-                <span className="text-luxe-gold font-semibold">
-                  Complimentary
-                </span>
-              </div>
-              <div className="flex justify-between font-semibold border-t border-gray-100 pt-4 mb-5">
-                <span className="text-xs tracking-widest uppercase text-luxe-charcoal-mid">
-                  Total
-                </span>
-                <span className="font-serif text-lg text-luxe-charcoal-mid">
-                  ₹{cartTotal.toLocaleString()}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={handleCheckout}
-                className="w-full gold-btn py-3.5 text-xs font-bold tracking-[0.25em] uppercase"
-                data-ocid="cart.confirm_button"
-              >
-                Proceed to Checkout
-              </button>
+        {/* Footer */}
+        {cartItems.length > 0 && (
+          <div className="border-t border-border px-5 py-4 space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="font-semibold text-foreground">Subtotal</span>
+              <span className="font-bold text-xl text-primary">
+                ₹{cartTotal}
+              </span>
             </div>
-          </>
+            <Button
+              className="w-full bg-primary text-primary-foreground hover:bg-fresh-green-dark h-12 font-bold text-base rounded-xl"
+              data-ocid="cart.submit_button"
+            >
+              Checkout — ₹{cartTotal}
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full text-muted-foreground text-sm"
+              onClick={clearCart}
+              data-ocid="cart.delete_button"
+            >
+              Clear Cart
+            </Button>
+          </div>
         )}
       </div>
     </>

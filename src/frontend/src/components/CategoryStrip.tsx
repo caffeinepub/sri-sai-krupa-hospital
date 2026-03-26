@@ -1,8 +1,18 @@
 import { CATEGORIES } from "../data/products";
 
+const ICONS: Record<string, string> = {
+  All: "🛒",
+  Fruits: "🍎",
+  Vegetables: "🥦",
+  Dairy: "🥛",
+  Snacks: "🍿",
+  Beverages: "🧃",
+  Bakery: "🍞",
+};
+
 interface CategoryStripProps {
   selectedCategory: string;
-  onSelect: (cat: string) => void;
+  onSelect: (category: string) => void;
 }
 
 export default function CategoryStrip({
@@ -10,24 +20,22 @@ export default function CategoryStrip({
   onSelect,
 }: CategoryStripProps) {
   return (
-    <div
-      className="sticky top-16 z-40 bg-white border-b border-gray-100 shadow-sm"
-      data-ocid="category.section"
-    >
+    <div className="sticky top-16 z-40 bg-background border-b border-border shadow-sm">
       <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-        <div className="flex items-center gap-1 overflow-x-auto category-strip py-3">
+        <div className="flex gap-2 overflow-x-auto py-3 category-strip">
           {CATEGORIES.map((cat) => (
             <button
-              key={cat}
               type="button"
+              key={cat}
               onClick={() => onSelect(cat)}
-              className={`shrink-0 px-5 py-1.5 text-xs font-medium tracking-widest uppercase transition-all duration-200 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all shrink-0 ${
                 selectedCategory === cat
-                  ? "bg-luxe-charcoal text-white"
-                  : "bg-transparent text-luxe-secondary border border-gray-300 hover:border-luxe-charcoal hover:text-luxe-charcoal"
+                  ? "bg-primary text-primary-foreground shadow-green"
+                  : "bg-muted text-muted-foreground hover:bg-fresh-green-light hover:text-primary"
               }`}
               data-ocid="category.tab"
             >
+              <span>{ICONS[cat]}</span>
               {cat}
             </button>
           ))}

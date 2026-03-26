@@ -6,16 +6,12 @@ import {
   useState,
 } from "react";
 
-export interface FashionProduct {
+export interface GroceryProduct {
   id: number;
   name: string;
   price: number;
-  originalPrice: number;
   category: string;
   image: string;
-  colors: string[];
-  isNew: boolean;
-  isSale: boolean;
 }
 
 export interface CartItem {
@@ -24,14 +20,13 @@ export interface CartItem {
   price: number;
   image: string;
   quantity: number;
-  selectedColor: string;
 }
 
 interface CartContextValue {
   cartItems: CartItem[];
   cartCount: number;
   cartTotal: number;
-  addToCart: (product: FashionProduct, color?: string) => void;
+  addToCart: (product: GroceryProduct) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, qty: number) => void;
   clearCart: () => void;
@@ -50,7 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     0,
   );
 
-  const addToCart = useCallback((product: FashionProduct, color?: string) => {
+  const addToCart = useCallback((product: GroceryProduct) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
@@ -68,7 +63,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
           price: product.price,
           image: product.image,
           quantity: 1,
-          selectedColor: color ?? product.colors[0] ?? "",
         },
       ];
     });

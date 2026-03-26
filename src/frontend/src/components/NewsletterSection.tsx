@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 export default function NewsletterSection() {
@@ -6,59 +8,48 @@ export default function NewsletterSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
+    if (email) {
       setSubmitted(true);
       setEmail("");
     }
   };
 
   return (
-    <section
-      className="py-20 px-4 md:px-8 bg-luxe-charcoal"
-      aria-label="Newsletter signup"
-      data-ocid="newsletter.section"
-    >
-      <div className="max-w-xl mx-auto text-center">
-        <p className="text-luxe-gold text-xs tracking-[0.35em] uppercase mb-4">
-          Stay Connected
-        </p>
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-white uppercase tracking-wider mb-4">
-          Join the LuxeWear Circle
+    <section className="bg-primary py-16 px-4 md:px-8">
+      <div className="max-w-2xl mx-auto text-center">
+        <span className="text-4xl block mb-3">📬</span>
+        <h2 className="font-display font-bold text-3xl text-primary-foreground mb-2">
+          Get Fresh Deals in Your Inbox
         </h2>
-        <p className="text-white/50 text-sm tracking-wide mb-10">
-          Be the first to discover new collections, exclusive offers, and
-          insider style guides.
+        <p className="text-primary-foreground/80 mb-7">
+          Subscribe and get 10% off your first order + weekly deals every
+          Friday.
         </p>
-
         {submitted ? (
-          <p
-            className="text-luxe-gold font-semibold tracking-widest uppercase text-sm"
+          <div
+            className="bg-white/20 text-primary-foreground rounded-xl px-6 py-4 font-semibold"
             data-ocid="newsletter.success_state"
           >
-            Welcome to the circle ✦
-          </p>
+            🎉 You're subscribed! Check your inbox for your discount code.
+          </div>
         ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-0"
-            data-ocid="newsletter.panel"
-          >
-            <input
+          <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
+            <Input
               type="email"
+              placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your email address"
               required
-              className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 px-5 py-3 text-xs tracking-wider focus:outline-none focus:border-luxe-gold transition-colors"
+              className="flex-1 bg-white border-0 rounded-full h-12 px-5 text-foreground placeholder:text-muted-foreground"
               data-ocid="newsletter.input"
             />
-            <button
+            <Button
               type="submit"
-              className="gold-btn px-8 py-3 text-xs font-bold tracking-[0.25em] uppercase shrink-0"
+              className="bg-white text-primary hover:bg-white/90 font-bold rounded-full h-12 px-6 shrink-0"
               data-ocid="newsletter.submit_button"
             >
               Subscribe
-            </button>
+            </Button>
           </form>
         )}
       </div>

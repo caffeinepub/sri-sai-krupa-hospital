@@ -3,75 +3,76 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Playfair Display";
-  src: url("https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKd.woff2")
-    format("woff2");
-  font-weight: 400 800;
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
   font-display: swap;
 }
 
 @layer base {
   :root {
-    /* LuxeWear — Luxury Fashion Theme */
-    /* background: white */
-    --background: 1 0 0;
-    --foreground: 0.22 0.005 264;
+    /* FreshCart — Fresh Grocery Theme */
+    --background: 0.99 0 0;
+    --foreground: 0.2 0.01 152;
 
-    --card: 0.95 0 0;
-    --card-foreground: 0.22 0.005 264;
+    --card: 1 0 0;
+    --card-foreground: 0.2 0.01 152;
 
     --popover: 1 0 0;
-    --popover-foreground: 0.22 0.005 264;
+    --popover-foreground: 0.2 0.01 152;
 
-    /* primary: charcoal #1a1a1a → oklch(0.15 0.003 264) */
-    --primary: 0.15 0.003 264;
+    /* primary: green #16a34a → oklch(0.59 0.17 145) */
+    --primary: 0.59 0.17 145;
     --primary-foreground: 1 0 0;
 
-    /* gold #c9a84c → oklch(0.72 0.12 75) */
-    --gold: 0.72 0.12 75;
-    --gold-dark: 0.62 0.12 75;
-    --gold-light: 0.94 0.05 75;
+    /* light green tint */
+    --green-light: 0.95 0.04 145;
+    --green-mid: 0.75 0.13 145;
+    --green-dark: 0.42 0.14 145;
 
-    /* cream #faf8f5 → oklch(0.98 0.006 75) */
-    --cream: 0.98 0.006 75;
+    /* orange accent for deals #f97316 → oklch(0.72 0.19 45) */
+    --orange: 0.72 0.19 45;
+    --orange-light: 0.96 0.05 45;
 
-    --secondary: 0.95 0 0;
-    --secondary-foreground: 0.22 0.005 264;
+    --secondary: 0.97 0.01 145;
+    --secondary-foreground: 0.3 0.05 145;
 
-    --muted: 0.96 0 0;
-    --muted-foreground: 0.52 0 0;
+    --muted: 0.96 0.005 145;
+    --muted-foreground: 0.5 0.01 145;
 
-    --accent: 0.72 0.12 75;
-    --accent-foreground: 0.15 0.003 264;
+    --accent: 0.59 0.17 145;
+    --accent-foreground: 1 0 0;
 
     --destructive: 0.58 0.22 25;
     --destructive-foreground: 1 0 0;
 
-    --border: 0.9 0 0;
-    --input: 0.9 0 0;
-    --ring: 0.72 0.12 75;
+    --border: 0.92 0.01 145;
+    --input: 0.92 0.01 145;
+    --ring: 0.59 0.17 145;
 
-    --radius: 0px;
+    --radius: 10px;
 
-    /* charcoal */
-    --charcoal: 0.15 0.003 264;
-    --charcoal-mid: 0.22 0.005 264;
-    --text-secondary: 0.52 0 0;
-
-    --chart-1: 0.72 0.12 75;
-    --chart-2: 0.15 0.003 264;
-    --chart-3: 0.52 0 0;
+    --chart-1: 0.59 0.17 145;
+    --chart-2: 0.72 0.19 45;
+    --chart-3: 0.5 0.01 145;
     --chart-4: 0.58 0.22 25;
-    --chart-5: 0.62 0.14 310;
+    --chart-5: 0.7 0.14 200;
 
-    --sidebar: 0.15 0.003 264;
+    --sidebar: 0.2 0.01 145;
     --sidebar-foreground: 1 0 0;
-    --sidebar-primary: 0.72 0.12 75;
-    --sidebar-primary-foreground: 0.15 0.003 264;
-    --sidebar-accent: 0.22 0.005 264;
+    --sidebar-primary: 0.59 0.17 145;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.3 0.05 145;
     --sidebar-accent-foreground: 1 0 0;
-    --sidebar-border: 0.25 0.005 264;
-    --sidebar-ring: 0.72 0.12 75;
+    --sidebar-border: 0.3 0.05 145;
+    --sidebar-ring: 0.59 0.17 145;
   }
 }
 
@@ -94,13 +95,13 @@
 }
 .product-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px oklch(0.15 0.003 264 / 0.14);
+  box-shadow: 0 20px 40px oklch(0.59 0.17 145 / 0.15);
 }
 .product-card img {
   transition: transform 0.4s ease;
 }
 .product-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 /* ===== Cart drawer ===== */
@@ -168,28 +169,12 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: oklch(var(--cream));
+  background: oklch(var(--green-light));
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(var(--gold));
+  background: oklch(var(--green-mid));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(var(--gold-dark));
-}
-
-/* ===== Playfair font utility ===== */
-.font-playfair {
-  font-family: "Playfair Display", Georgia, serif;
-}
-
-/* ===== Gold shimmer hover ===== */
-.gold-btn {
-  background: oklch(var(--gold));
-  color: oklch(var(--charcoal));
-  transition: background 0.25s ease, transform 0.2s ease;
-}
-.gold-btn:hover {
-  background: oklch(var(--gold-dark));
-  transform: translateY(-1px);
+  background: oklch(var(--primary));
 }
