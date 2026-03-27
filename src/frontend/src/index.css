@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Figtree";
-  src: url("/assets/fonts/Figtree.woff2") format("woff2");
-  font-weight: 300 900;
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
   font-display: swap;
 }
 
@@ -18,61 +18,62 @@
 
 @layer base {
   :root {
-    /* FreshCart — Fresh Grocery Theme */
-    --background: 0.99 0 0;
-    --foreground: 0.2 0.01 152;
+    /* Logskim — Corporate Navy/White Theme */
+    /* #FFFFFF background */
+    --background: 1 0 0;
+    /* #111827 headings/foreground */
+    --foreground: 0.18 0.01 255;
 
     --card: 1 0 0;
-    --card-foreground: 0.2 0.01 152;
+    --card-foreground: 0.18 0.01 255;
 
     --popover: 1 0 0;
-    --popover-foreground: 0.2 0.01 152;
+    --popover-foreground: 0.18 0.01 255;
 
-    /* primary: green #16a34a → oklch(0.59 0.17 145) */
-    --primary: 0.59 0.17 145;
+    /* primary navy #0B2A45 → oklch(0.22 0.06 243) */
+    --primary: 0.22 0.06 243;
     --primary-foreground: 1 0 0;
 
-    /* light green tint */
-    --green-light: 0.95 0.04 145;
-    --green-mid: 0.75 0.13 145;
-    --green-dark: 0.42 0.14 145;
+    /* section bg #F5F7FA → oklch(0.97 0.005 243) */
+    --section-alt: 0.97 0.005 243;
 
-    /* orange accent for deals #f97316 → oklch(0.72 0.19 45) */
-    --orange: 0.72 0.19 45;
-    --orange-light: 0.96 0.05 45;
+    /* icon chip #EEF2F6 → oklch(0.95 0.01 243) */
+    --chip-bg: 0.95 0.01 243;
 
-    --secondary: 0.97 0.01 145;
-    --secondary-foreground: 0.3 0.05 145;
+    --secondary: 0.96 0.005 243;
+    --secondary-foreground: 0.22 0.06 243;
 
-    --muted: 0.96 0.005 145;
-    --muted-foreground: 0.5 0.01 145;
+    --muted: 0.97 0.005 243;
+    /* #6B7280 muted text → oklch(0.52 0.01 243) */
+    --muted-foreground: 0.52 0.01 243;
 
-    --accent: 0.59 0.17 145;
-    --accent-foreground: 1 0 0;
+    --accent: 0.95 0.01 243;
+    --accent-foreground: 0.22 0.06 243;
 
     --destructive: 0.58 0.22 25;
     --destructive-foreground: 1 0 0;
 
-    --border: 0.92 0.01 145;
-    --input: 0.92 0.01 145;
-    --ring: 0.59 0.17 145;
+    /* #E5E7EB border → oklch(0.92 0.005 243) */
+    --border: 0.92 0.005 243;
+    --input: 0.92 0.005 243;
+    --ring: 0.22 0.06 243;
 
-    --radius: 10px;
+    --radius: 12px;
 
-    --chart-1: 0.59 0.17 145;
-    --chart-2: 0.72 0.19 45;
-    --chart-3: 0.5 0.01 145;
-    --chart-4: 0.58 0.22 25;
-    --chart-5: 0.7 0.14 200;
+    --chart-1: 0.22 0.06 243;
+    --chart-2: 0.45 0.1 243;
+    --chart-3: 0.65 0.08 243;
+    --chart-4: 0.52 0.01 243;
+    --chart-5: 0.72 0.12 200;
 
-    --sidebar: 0.2 0.01 145;
+    --sidebar: 0.22 0.06 243;
     --sidebar-foreground: 1 0 0;
-    --sidebar-primary: 0.59 0.17 145;
+    --sidebar-primary: 0.45 0.1 243;
     --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.3 0.05 145;
+    --sidebar-accent: 0.3 0.07 243;
     --sidebar-accent-foreground: 1 0 0;
-    --sidebar-border: 0.3 0.05 145;
-    --sidebar-ring: 0.59 0.17 145;
+    --sidebar-border: 0.3 0.07 243;
+    --sidebar-ring: 0.45 0.1 243;
   }
 }
 
@@ -89,47 +90,11 @@
   }
 }
 
-/* ===== Product card ===== */
-.product-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px oklch(0.59 0.17 145 / 0.15);
-}
-.product-card img {
-  transition: transform 0.4s ease;
-}
-.product-card:hover img {
-  transform: scale(1.06);
-}
-
-/* ===== Cart drawer ===== */
-.cart-drawer {
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ===== Badge pop ===== */
-@keyframes badge-pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.4);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.badge-pop {
-  animation: badge-pop 0.3s ease;
-}
-
-/* ===== Fade in ===== */
+/* ===== Section reveal animation ===== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(28px);
   }
   to {
     opacity: 1;
@@ -137,44 +102,34 @@
   }
 }
 .fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInUp 0.65s ease forwards;
 }
 
-/* ===== Hero slide ===== */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* ===== Star rating ===== */
+.star-filled {
+  color: #f59e0b;
 }
-.slide-in {
-  animation: slideIn 0.6s ease forwards;
+.star-empty {
+  color: #d1d5db;
 }
 
-/* ===== Category strip scrollbar ===== */
-.category-strip::-webkit-scrollbar {
-  display: none;
-}
-.category-strip {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* ===== Custom scrollbar ===== */
+/* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: oklch(var(--green-light));
+  background: oklch(0.97 0.005 243);
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(var(--green-mid));
+  background: oklch(0.65 0.04 243);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(var(--primary));
+  background: oklch(0.22 0.06 243);
+}
+
+/* ===== Active nav link ===== */
+.nav-link-active {
+  color: oklch(0.22 0.06 243);
+  font-weight: 600;
 }

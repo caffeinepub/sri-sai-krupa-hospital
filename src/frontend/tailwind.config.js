@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Figtree'", "system-ui", "sans-serif"],
+        sans: ["'Plus Jakarta Sans'", "system-ui", "sans-serif"],
         display: ["'Bricolage Grotesque'", "system-ui", "sans-serif"],
       },
       colors: {
@@ -51,14 +51,13 @@ export default {
           DEFAULT: "oklch(var(--card))",
           foreground: "oklch(var(--card-foreground))",
         },
-        fresh: {
-          green: "oklch(var(--primary))",
-          "green-light": "oklch(var(--green-light))",
-          "green-mid": "oklch(var(--green-mid))",
-          "green-dark": "oklch(var(--green-dark))",
-          orange: "oklch(var(--orange))",
-          "orange-light": "oklch(var(--orange-light))",
+        navy: {
+          DEFAULT: "oklch(var(--primary))",
+          light: "oklch(0.45 0.08 243)",
+          dark: "oklch(0.15 0.05 243)",
         },
+        "section-alt": "oklch(var(--section-alt))",
+        "chip-bg": "oklch(var(--chip-bg))",
         chart: {
           1: "oklch(var(--chart-1))",
           2: "oklch(var(--chart-2))",
@@ -81,24 +80,22 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        xl: "14px",
-        "2xl": "20px",
+        xl: "16px",
+        "2xl": "24px",
       },
       boxShadow: {
-        card: "0 2px 12px oklch(0.59 0.17 145 / 0.07)",
-        "card-hover": "0 20px 40px oklch(0.59 0.17 145 / 0.15)",
-        navbar: "0 2px 16px oklch(0.2 0.01 152 / 0.12)",
-        green: "0 4px 20px oklch(0.59 0.17 145 / 0.3)",
+        card: "0 2px 16px oklch(0.22 0.06 243 / 0.07)",
+        "card-hover": "0 12px 36px oklch(0.22 0.06 243 / 0.14)",
+        navbar: "0 2px 16px oklch(0.22 0.06 243 / 0.10)",
+        navy: "0 4px 20px oklch(0.22 0.06 243 / 0.3)",
       },
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
         "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
-        "badge-pulse": { "0%,100%": { transform: "scale(1)" }, "50%": { transform: "scale(1.3)" } },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "badge-pulse": "badge-pulse 0.3s ease",
       },
     },
   },

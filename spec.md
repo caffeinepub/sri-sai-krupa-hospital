@@ -1,32 +1,34 @@
-# HDPE Pipes Product Page
+# Logskim Solution Pvt Ltd
 
 ## Current State
-App.tsx renders ShowcasePage. The project has a MedCarePro hospital site structure with various pages.
+New project — no existing application files.
 
 ## Requested Changes (Diff)
 
 ### Add
-- New ProductPage component matching the Figma screenshot
-- Image carousel with main image + thumbnail strip
-- Product info panel: breadcrumb, certifications badges, title, bullet features, price range, shipping info, CTA buttons
-- Trusted companies logo strip (EUROFLEX logos)
-- Dark-themed technical specifications table section with download button
+- Full corporate website for Logskim Solution Pvt Ltd
+- Sticky navbar with logo and navigation links
+- Hero section with headline and CTA
+- About/Company section
+- Services section
+- Why Choose Us section
+- Business hours section
+- Reviews/Testimonials section with real reviews
+- Contact section with address, phone, Google Maps embed
+- Footer with all company details
 
 ### Modify
-- App.tsx to render the new ProductPage
+- N/A (new project)
 
 ### Remove
-- Nothing (keep existing files)
+- N/A (new project)
 
 ## Implementation Plan
-1. Create ProductPage.tsx with two main sections:
-   - Hero product section (white bg): carousel left, product details right
-   - Technical specs section (dark bg): table + download button
-2. Carousel: main image + 6 thumbnail images, prev/next arrows
-3. Certifications: BIS, ISO, CE badge pills
-4. Price range, shipping/returns tags, certification text
-5. Two CTA buttons: Get Custom Quote (green filled), View Technical Specs (outline)
-6. Trusted by strip with EUROFLEX brand logos
-7. Tech specs table: 10 rows of parameter/specification data
-8. Download Full Technical Datasheet button
-9. Update App.tsx to render ProductPage
+1. Build single-page React app with all sections
+2. Real company data:
+   - Address: 5th Floor, Murugesan Naicker Complex, No.84, Greams Rd, B-Block, Thousand Lights West, Thousand Lights, Chennai, Tamil Nadu 600006
+   - Phone: 073052 13385
+   - Hours: Mon-Sat 10am-7pm (Sun Closed)
+3. Reviews from AmbitionBox (2.1/5) and Google reviews from Evanjalin Mary, Priya bairav, Suba Lakshmi
+4. Google Maps embed for the Chennai address
+5. Fully responsive — mobile, tablet, desktop

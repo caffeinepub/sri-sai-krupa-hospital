@@ -1,245 +1,210 @@
-import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
-import { motion } from "motion/react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Clock, MapPin, Phone } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ContactSection() {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+    setSubmitting(true);
+    setTimeout(() => {
+      setSubmitting(false);
+      setForm({ name: "", email: "", message: "" });
+      toast.success("Message sent! We'll get back to you soon.");
+    }, 1000);
+  };
+
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-white">
+    <section
+      id="contact"
+      data-ocid="contact.section"
+      className="py-20 lg:py-28 bg-section-alt"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55 }}
-          className="text-center mb-14"
-        >
-          <div className="inline-flex items-center gap-2 bg-hospital-teal-light text-hospital-primary text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-4">
+        <div className="text-center mb-14">
+          <span className="text-xs font-semibold tracking-widest uppercase text-primary/70">
+            Get In Touch
+          </span>
+          <h2 className="mt-2 text-3xl sm:text-4xl font-display font-bold text-foreground">
             Contact Us
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Get in <span className="text-gradient-teal">Touch</span>
           </h2>
-          <p className="text-muted-foreground text-base max-w-xl mx-auto">
-            We're here whenever you need us. Reach out for appointments,
-            emergencies, or general inquiries.
+          <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+            Visit our office in Chennai or send us a message — we're happy to
+            help.
           </p>
-        </motion.div>
+          <div className="mt-4 w-12 h-1 rounded-full bg-primary mx-auto" />
+        </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-          {/* Left — Contact info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55 }}
-            className="space-y-5"
-          >
-            {/* Address */}
-            <div className="bg-secondary/50 rounded-2xl p-6 border border-border flex items-start gap-4">
-              <div className="w-11 h-11 bg-hospital-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-hospital-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground text-sm mb-1">
-                  Address
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Behind Semilar Research Center,
-                  <br />
-                  Sahakara Nagar, Bangalore – 560092
-                  <br />
-                  Karnataka, India
-                </p>
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className="bg-secondary/50 rounded-2xl p-6 border border-border flex items-start gap-4">
-              <div className="w-11 h-11 bg-hospital-green-light rounded-xl flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-hospital-green" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground text-sm mb-1">
-                  Phone
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  Main: 080-XXXX-XXXX
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  Emergency: 080-YYYY-YYYY (24/7)
-                </p>
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="bg-secondary/50 rounded-2xl p-6 border border-border flex items-start gap-4">
-              <div className="w-11 h-11 bg-hospital-teal-light rounded-xl flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-hospital-teal" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground text-sm mb-1">
-                  Email
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  info@srisaikrupahospital.com
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  appointments@srisaikrupahospital.com
-                </p>
-              </div>
-            </div>
-
-            {/* Hours */}
-            <div className="bg-secondary/50 rounded-2xl p-6 border border-border flex items-start gap-4">
-              <div className="w-11 h-11 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Clock className="w-5 h-5 text-amber-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground text-sm mb-1">
-                  Working Hours
-                </h3>
-                <div className="space-y-0.5 text-sm text-muted-foreground">
-                  <p>
-                    <span className="font-medium text-foreground/80">
-                      Mon – Sat:
-                    </span>{" "}
-                    8:00 AM – 8:00 PM
-                  </p>
-                  <p>
-                    <span className="font-medium text-foreground/80">
-                      Sunday:
-                    </span>{" "}
-                    9:00 AM – 2:00 PM
-                  </p>
-                  <p className="flex items-center gap-1.5 mt-1">
-                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="font-medium text-green-700">
-                      Emergency: 24/7
-                    </span>
-                  </p>
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Info + Map */}
+          <div className="space-y-6">
+            {/* Info cards */}
+            <div className="bg-white rounded-2xl border border-border shadow-card p-6 space-y-5">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-chip-bg flex items-center justify-center flex-shrink-0">
+                  <MapPin size={18} className="text-primary" />
                 </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right — Map placeholder */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55, delay: 0.15 }}
-            className="rounded-3xl overflow-hidden border border-border shadow-xs min-h-[400px] lg:min-h-0 relative"
-          >
-            {/* Styled map placeholder */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-teal-50 to-green-50">
-              {/* Grid lines simulating map */}
-              <svg
-                aria-hidden="true"
-                role="presentation"
-                className="absolute inset-0 w-full h-full opacity-20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  <pattern
-                    id="map-grid"
-                    x="0"
-                    y="0"
-                    width="50"
-                    height="50"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <path
-                      d="M 50 0 L 0 0 0 50"
-                      fill="none"
-                      stroke="oklch(0.35 0.12 220)"
-                      strokeWidth="0.5"
-                    />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#map-grid)" />
-                {/* Road lines */}
-                <line
-                  x1="0"
-                  y1="50%"
-                  x2="100%"
-                  y2="50%"
-                  stroke="oklch(0.52 0.10 220)"
-                  strokeWidth="4"
-                  opacity="0.3"
-                />
-                <line
-                  x1="35%"
-                  y1="0"
-                  x2="35%"
-                  y2="100%"
-                  stroke="oklch(0.52 0.10 220)"
-                  strokeWidth="3"
-                  opacity="0.25"
-                />
-                <line
-                  x1="70%"
-                  y1="0"
-                  x2="70%"
-                  y2="100%"
-                  stroke="oklch(0.52 0.10 220)"
-                  strokeWidth="2"
-                  opacity="0.2"
-                />
-                <line
-                  x1="0"
-                  y1="25%"
-                  x2="100%"
-                  y2="25%"
-                  stroke="oklch(0.52 0.10 220)"
-                  strokeWidth="2"
-                  opacity="0.2"
-                />
-                <line
-                  x1="0"
-                  y1="75%"
-                  x2="100%"
-                  y2="75%"
-                  stroke="oklch(0.52 0.10 220)"
-                  strokeWidth="2"
-                  opacity="0.2"
-                />
-              </svg>
-            </div>
-
-            {/* Pin */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="relative inline-block mb-4">
-                  <div className="w-14 h-14 hospital-gradient rounded-full flex items-center justify-center shadow-xl">
-                    <Navigation className="w-7 h-7 text-white fill-white/30" />
+                <div>
+                  <div className="font-semibold text-sm text-foreground">
+                    Address
                   </div>
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 hospital-gradient rotate-45 shadow-sm" />
-                  {/* Ripple */}
-                  <div className="absolute inset-0 rounded-full bg-hospital-primary/20 animate-ping" />
-                </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-border shadow-md px-6 py-4 max-w-xs">
-                  <p className="font-display font-bold text-hospital-primary text-sm">
-                    Sri Sai Krupa Hospital
-                  </p>
-                  <p className="text-muted-foreground text-xs mt-1 leading-snug">
-                    Behind Semilar Research Center,
+                  <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed">
+                    5th Floor, Murugesan Naicker Complex,
                     <br />
-                    Sahakara Nagar, Bangalore – 560092
+                    No.84, Greams Rd, B-Block,
+                    <br />
+                    Thousand Lights West, Thousand Lights,
+                    <br />
+                    Chennai, Tamil Nadu 600006
                   </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-chip-bg flex items-center justify-center flex-shrink-0">
+                  <Phone size={18} className="text-primary" />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm text-foreground">
+                    Phone
+                  </div>
                   <a
-                    href="https://www.google.com/maps/search/Sri+Sai+Krupa+Hospital+Sahakara+Nagar+Bangalore"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-ocid="contact.link"
-                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-hospital-primary hover:underline"
+                    href="tel:07305213385"
+                    className="text-sm text-primary hover:underline mt-0.5 block"
                   >
-                    <MapPin className="w-3 h-3" />
-                    Get Directions
+                    073052 13385
                   </a>
                 </div>
               </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-chip-bg flex items-center justify-center flex-shrink-0">
+                  <Clock size={18} className="text-primary" />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm text-foreground">
+                    Hours
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-0.5">
+                    Mon – Sat: 10 am – 7 pm
+                    <br />
+                    Sunday: Closed
+                  </p>
+                </div>
+              </div>
             </div>
-          </motion.div>
+
+            {/* Map */}
+            <div className="rounded-2xl overflow-hidden border border-border shadow-card">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5!2d80.2565!3d13.0615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAzJzQxLjQiTiA4MMKwMTUnMjMuNCJF!5e0!3m2!1sen!2sin!4v1"
+                width="100%"
+                height="260"
+                style={{ border: 0, display: "block" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Logskim Office Location"
+              />
+            </div>
+          </div>
+
+          {/* Contact form */}
+          <div className="bg-white rounded-2xl border border-border shadow-card p-8">
+            <h3 className="text-lg font-display font-bold text-foreground mb-6">
+              Send Us a Message
+            </h3>
+            <form
+              data-ocid="contact.modal"
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="name"
+                  className="text-sm font-semibold text-foreground"
+                >
+                  Name
+                </Label>
+                <Input
+                  data-ocid="contact.input"
+                  id="name"
+                  name="name"
+                  placeholder="Your full name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="rounded-xl border-border focus:ring-primary"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-semibold text-foreground"
+                >
+                  Email
+                </Label>
+                <Input
+                  data-ocid="contact.input"
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  className="rounded-xl border-border focus:ring-primary"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="message"
+                  className="text-sm font-semibold text-foreground"
+                >
+                  Message
+                </Label>
+                <Textarea
+                  data-ocid="contact.textarea"
+                  id="message"
+                  name="message"
+                  placeholder="Tell us how we can help..."
+                  rows={5}
+                  value={form.message}
+                  onChange={handleChange}
+                  required
+                  className="rounded-xl border-border focus:ring-primary resize-none"
+                />
+              </div>
+
+              <Button
+                data-ocid="contact.submit_button"
+                type="submit"
+                disabled={submitting}
+                className="w-full bg-primary text-primary-foreground hover:bg-navy-dark rounded-xl font-semibold py-6"
+              >
+                {submitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
