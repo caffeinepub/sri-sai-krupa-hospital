@@ -34,7 +34,8 @@ export default function ContactSection() {
     <section
       id="contact"
       data-ocid="contact.section"
-      className="py-20 lg:py-28 bg-section-alt"
+      className="py-20 lg:py-28"
+      style={{ backgroundColor: "oklch(0.97 0.005 243)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -52,13 +53,23 @@ export default function ContactSection() {
           <div className="mt-4 w-12 h-1 rounded-full bg-primary mx-auto" />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Info + Map */}
           <div className="space-y-6">
             {/* Info cards */}
-            <div className="bg-white rounded-2xl border border-border shadow-card p-6 space-y-5">
+            <div
+              className="rounded-2xl border p-6 space-y-5"
+              style={{
+                backgroundColor: "#ffffff",
+                borderColor: "oklch(0.92 0.005 243)",
+                boxShadow: "0 2px 16px oklch(0.22 0.06 243 / 0.07)",
+              }}
+            >
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-chip-bg flex items-center justify-center flex-shrink-0">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: "oklch(0.95 0.01 243)" }}
+                >
                   <MapPin size={18} className="text-primary" />
                 </div>
                 <div>
@@ -78,7 +89,10 @@ export default function ContactSection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-chip-bg flex items-center justify-center flex-shrink-0">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: "oklch(0.95 0.01 243)" }}
+                >
                   <Phone size={18} className="text-primary" />
                 </div>
                 <div>
@@ -95,7 +109,10 @@ export default function ContactSection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-chip-bg flex items-center justify-center flex-shrink-0">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: "oklch(0.95 0.01 243)" }}
+                >
                   <Clock size={18} className="text-primary" />
                 </div>
                 <div>
@@ -112,22 +129,35 @@ export default function ContactSection() {
             </div>
 
             {/* Map */}
-            <div className="rounded-2xl overflow-hidden border border-border shadow-card">
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                border: "1px solid oklch(0.92 0.005 243)",
+                boxShadow: "0 2px 16px oklch(0.22 0.06 243 / 0.07)",
+              }}
+            >
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5!2d80.2565!3d13.0615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAzJzQxLjQiTiA4MMKwMTUnMjMuNCJF!5e0!3m2!1sen!2sin!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5358456611!2d80.25417061482!3d13.06187699079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267f0123456%3A0xabcdef!2sGreams+Road%2C+Chennai%2C+Tamil+Nadu!5e0!3m2!1sen!2sin!4v1711353600000!5m2!1sen!2sin"
                 width="100%"
                 height="260"
                 style={{ border: 0, display: "block" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Logskim Office Location"
+                title="Logskim Office — Greams Road, Chennai"
               />
             </div>
           </div>
 
           {/* Contact form */}
-          <div className="bg-white rounded-2xl border border-border shadow-card p-8">
+          <div
+            className="rounded-2xl p-8"
+            style={{
+              backgroundColor: "#ffffff",
+              border: "1px solid oklch(0.92 0.005 243)",
+              boxShadow: "0 2px 16px oklch(0.22 0.06 243 / 0.07)",
+            }}
+          >
             <h3 className="text-lg font-display font-bold text-foreground mb-6">
               Send Us a Message
             </h3>
@@ -151,7 +181,7 @@ export default function ContactSection() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="rounded-xl border-border focus:ring-primary"
+                  className="rounded-xl"
                 />
               </div>
 
@@ -171,7 +201,7 @@ export default function ContactSection() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="rounded-xl border-border focus:ring-primary"
+                  className="rounded-xl"
                 />
               </div>
 
@@ -191,7 +221,7 @@ export default function ContactSection() {
                   value={form.message}
                   onChange={handleChange}
                   required
-                  className="rounded-xl border-border focus:ring-primary resize-none"
+                  className="rounded-xl resize-none"
                 />
               </div>
 
@@ -199,7 +229,7 @@ export default function ContactSection() {
                 data-ocid="contact.submit_button"
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-primary text-primary-foreground hover:bg-navy-dark rounded-xl font-semibold py-6"
+                className="w-full rounded-xl font-semibold py-6"
               >
                 {submitting ? "Sending..." : "Send Message"}
               </Button>
