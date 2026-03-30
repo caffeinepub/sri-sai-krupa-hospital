@@ -16,6 +16,22 @@ export interface Contact {
   'message' : string,
   'timestamp' : Time,
 }
+export interface Order {
+  'deliveryAddress' : string,
+  'user' : Principal,
+  'deliverySlot' : string,
+  'timestamp' : Time,
+  'items' : Array<ShoppingCartItem>,
+}
+export interface Product {
+  'name' : string,
+  'description' : string,
+  'imageUrl' : string,
+  'category' : string,
+  'rating' : bigint,
+  'price' : bigint,
+}
+export interface ShoppingCartItem { 'productId' : bigint, 'quantity' : bigint }
 export type Time = bigint;
 export interface UserProfile { 'name' : string }
 export type UserRole = { 'admin' : null } |
@@ -23,13 +39,23 @@ export type UserRole = { 'admin' : null } |
   { 'guest' : null };
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addProduct' : ActorMethod<[Product], bigint>,
+  'addToCart' : ActorMethod<[bigint, bigint], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'deleteProduct' : ActorMethod<[bigint], undefined>,
   'getAllContacts' : ActorMethod<[], Array<Contact>>,
+  'getAllProducts' : ActorMethod<[], Array<Product>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getOrderHistory' : ActorMethod<[], Array<Order>>,
+  'getProductsByCategory' : ActorMethod<[string], Array<Product>>,
+  'getShoppingCart' : ActorMethod<[], Array<ShoppingCartItem>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'placeOrder' : ActorMethod<[string, string], undefined>,
+  'removeFromCart' : ActorMethod<[bigint], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'searchProducts' : ActorMethod<[string], Array<Product>>,
   'submitContact' : ActorMethod<[string, string, string], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

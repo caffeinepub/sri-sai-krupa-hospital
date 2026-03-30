@@ -1,86 +1,92 @@
-import { Code2, Users } from "lucide-react";
+import { Globe, Monitor, Palette } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 const services = [
   {
-    icon: Users,
-    title: "HR Services",
+    icon: Globe,
+    title: "Website Development",
     description:
-      "Comprehensive human resources solutions tailored for growing businesses in Chennai and beyond.",
-    bullets: [
-      "Talent Acquisition & Recruitment",
-      "Payroll Management",
-      "Statutory Compliance",
-      "Training & Development",
-    ],
-    chipColor: "bg-blue-50 text-blue-700",
-    iconBg: "bg-blue-50",
+      "Fully responsive, fast-loading websites built with modern technologies. Landing pages, business sites, and e-commerce solutions tailored to your needs.",
+    bullets: ["Responsive Design", "SEO Optimized", "Fast Performance"],
+    color: "text-blue-500",
+    bg: "bg-blue-50",
   },
   {
-    icon: Code2,
-    title: "IT Solutions",
+    icon: Palette,
+    title: "Logo Design",
     description:
-      "End-to-end technology services designed to modernize and scale your business operations.",
-    bullets: [
-      "Custom Software Development",
-      "Technology Consulting",
-      "Digital Transformation",
-      "Ongoing IT Support",
-    ],
-    chipColor: "bg-indigo-50 text-indigo-700",
-    iconBg: "bg-indigo-50",
+      "Memorable brand identities that tell your story. From concept to final vector files, I create logos that make lasting impressions.",
+    bullets: ["Brand Identity", "Vector Formats", "Multiple Concepts"],
+    color: "text-indigo",
+    bg: "bg-secondary",
+  },
+  {
+    icon: Monitor,
+    title: "UI/UX Design",
+    description:
+      "User-centered interfaces designed in Figma. Research-driven UX combined with polished UI ensures your product delights every user.",
+    bullets: ["Figma Prototypes", "User Research", "Wireframing"],
+    color: "text-purple-500",
+    bg: "bg-purple-50",
   },
 ];
 
 export default function ServicesSection() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      },
+      { threshold: 0.1 },
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section
-      id="services"
-      data-ocid="services.section"
-      className="py-20 lg:py-28 bg-section-alt"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="py-24 bg-background">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="text-xs font-semibold tracking-widest uppercase text-primary/70">
-            What We Offer
-          </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-display font-bold text-foreground">
-            Our Services
+          <div className="text-sm font-semibold text-indigo uppercase tracking-widest mb-2">
+            What I Offer
+          </div>
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+            Services
           </h2>
-          <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-            Two pillars of expertise — HR and IT — working together to drive
-            your business forward.
-          </p>
-          <div className="mt-4 w-12 h-1 rounded-full bg-primary mx-auto" />
+          <div className="mt-3 w-12 h-1 bg-indigo rounded mx-auto" />
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div
+          ref={ref}
+          className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {services.map((svc) => (
             <div
               key={svc.title}
+              className="service-card bg-card rounded-2xl p-8 border border-border shadow-card flex flex-col gap-5"
               data-ocid="services.card"
-              className="bg-white rounded-2xl border border-border p-8 shadow-card hover:shadow-card-hover transition-shadow duration-300"
             >
-              {/* Icon chip */}
               <div
-                className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${svc.iconBg}`}
+                className={`w-14 h-14 rounded-2xl ${svc.bg} flex items-center justify-center`}
               >
-                <svc.icon size={26} className="text-primary" />
+                <svc.icon className={`w-6 h-6 ${svc.color}`} />
               </div>
-
-              <h3 className="text-xl font-display font-bold text-foreground mb-2">
-                {svc.title}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              <h3 className="text-lg font-bold text-foreground">{svc.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {svc.description}
               </p>
-
-              <ul className="space-y-2.5">
+              <ul className="flex flex-col gap-1.5 mt-auto">
                 {svc.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-sm text-foreground">{b}</span>
+                  <li
+                    key={b}
+                    className="flex items-center gap-2 text-sm text-foreground"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo" />
+                    {b}
                   </li>
                 ))}
               </ul>

@@ -1,113 +1,77 @@
-import {
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
-
-export interface GroceryProduct {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-}
+import type { ProductItem } from "@/data/products";
+import { createContext, useContext, useState } from "react";
 
 export interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
+  product: ProductItem;
   quantity: number;
 }
 
-interface CartContextValue {
-  cartItems: CartItem[];
-  cartCount: number;
-  cartTotal: number;
-  addToCart: (product: GroceryProduct) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, qty: number) => void;
+interface CartContextType {
+  items: CartItem[];
+  addToCart: (product: ProductItem) => void;
+  removeFromCart: (productId: number) => void;
+  updateQuantity: (productId: number, delta: number) => void;
   clearCart: () => void;
-  isInCart: (id: number) => boolean;
-  getQuantity: (id: number) => number;
+  totalItems: number;
+  totalPrice: number;
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
 }
 
-const CartContext = createContext<CartContextValue | null>(null);
+const CartContext = createContext<CartContextType | null>(null);
 
-export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+export function CartProvider({ children }: { children: React.ReactNode }) {
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
-
-  const addToCart = useCallback((product: GroceryProduct) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+  const addToCart = (product: ProductItem) => {
+    setItems((prev) => {
+      const existing = prev.find((i) => i.product.id === product.id);
       if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item,
+        return prev.map((i) =>
+          i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i,
         );
       }
-      return [
-        ...prev,
-        {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          quantity: 1,
-        },
-      ];
+      return [...prev, { product, quantity: 1 }];
     });
-  }, []);
+  };
 
-  const removeFromCart = useCallback((id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
+  const removeFromCart = (productId: number) => {
+    setItems((prev) => prev.filter((i) => i.product.id !== productId));
+  };
 
-  const updateQuantity = useCallback((id: number, qty: number) => {
-    if (qty <= 0) {
-      setCartItems((prev) => prev.filter((item) => item.id !== id));
-    } else {
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, quantity: qty } : item,
-        ),
-      );
-    }
-  }, []);
+  const updateQuantity = (productId: number, delta: number) => {
+    setItems((prev) =>
+      prev
+        .map((i) =>
+          i.product.id === productId
+            ? { ...i, quantity: i.quantity + delta }
+            : i,
+        )
+        .filter((i) => i.quantity > 0),
+    );
+  };
 
-  const clearCart = useCallback(() => setCartItems([]), []);
+  const clearCart = () => setItems([]);
 
-  const isInCart = useCallback(
-    (id: number) => cartItems.some((item) => item.id === id),
-    [cartItems],
-  );
-
-  const getQuantity = useCallback(
-    (id: number) => cartItems.find((item) => item.id === id)?.quantity ?? 0,
-    [cartItems],
+  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+  const totalPrice = items.reduce(
+    (sum, i) => sum + i.product.price * i.quantity,
+    0,
   );
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
-        cartCount,
-        cartTotal,
+        items,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
-        isInCart,
-        getQuantity,
+        totalItems,
+        totalPrice,
+        isCartOpen,
+        setIsCartOpen,
       }}
     >
       {children}

@@ -1,34 +1,31 @@
-# Logskim Solution Pvt Ltd
+# FreshBasket - Grocery Delivery
 
 ## Current State
-New project — no existing application files.
+This project previously contained the Logskim Solution Pvt Ltd business website. We are replacing it with a full grocery delivery e-commerce app.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Full corporate website for Logskim Solution Pvt Ltd
-- Sticky navbar with logo and navigation links
-- Hero section with headline and CTA
-- About/Company section
-- Services section
-- Why Choose Us section
-- Business hours section
-- Reviews/Testimonials section with real reviews
-- Contact section with address, phone, Google Maps embed
-- Footer with all company details
+- Home page: sticky navbar with search, cart icon with badge, logo
+- Hero banner with CTA
+- Category filter strip: Fruits, Dairy, Snacks, Meat, Bakery, Pantry
+- Product grid with images, prices, ratings, Add to Cart button
+- Cart drawer: slide-in with qty controls, subtotal, checkout button
+- Checkout page: address form (name, address, city, phone, delivery slot), order summary
+- Login/Signup modal with email/password form
+- Product data: 18+ products across 6 categories with images and prices
+- Footer with links, payment badges, social icons
+- SEO meta tags and responsive mobile design
 
 ### Modify
-- N/A (new project)
+- Replace existing Logskim frontend entirely
 
 ### Remove
-- N/A (new project)
+- All Logskim business website content and components
 
 ## Implementation Plan
-1. Build single-page React app with all sections
-2. Real company data:
-   - Address: 5th Floor, Murugesan Naicker Complex, No.84, Greams Rd, B-Block, Thousand Lights West, Thousand Lights, Chennai, Tamil Nadu 600006
-   - Phone: 073052 13385
-   - Hours: Mon-Sat 10am-7pm (Sun Closed)
-3. Reviews from AmbitionBox (2.1/5) and Google reviews from Evanjalin Mary, Priya bairav, Suba Lakshmi
-4. Google Maps embed for the Chennai address
-5. Fully responsive — mobile, tablet, desktop
+1. Generate Motoko backend: store products, manage cart sessions, handle orders
+2. Build React frontend: Home, Checkout pages, Cart drawer, Login/Signup modal
+3. Category filtering, cart state management, form validation
+4. Full mobile responsiveness down to 375px (iPhone SE)
+5. SEO: meta tags, semantic HTML, page titles

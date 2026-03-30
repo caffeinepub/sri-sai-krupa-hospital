@@ -89,6 +89,10 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface ShoppingCartItem {
+    productId: bigint;
+    quantity: bigint;
+}
 export type Time = bigint;
 export interface Contact {
     name: string;
@@ -96,8 +100,23 @@ export interface Contact {
     message: string;
     timestamp: Time;
 }
+export interface Order {
+    deliveryAddress: string;
+    user: Principal;
+    deliverySlot: string;
+    timestamp: Time;
+    items: Array<ShoppingCartItem>;
+}
 export interface UserProfile {
     name: string;
+}
+export interface Product {
+    name: string;
+    description: string;
+    imageUrl: string;
+    category: string;
+    rating: bigint;
+    price: bigint;
 }
 export enum UserRole {
     admin = "admin",
@@ -106,14 +125,24 @@ export enum UserRole {
 }
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
+    addProduct(product: Product): Promise<bigint>;
+    addToCart(productId: bigint, quantity: bigint): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
+    deleteProduct(productId: bigint): Promise<void>;
     getAllContacts(): Promise<Array<Contact>>;
+    getAllProducts(): Promise<Array<Product>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getOrderHistory(): Promise<Array<Order>>;
+    getProductsByCategory(category: string): Promise<Array<Product>>;
+    getShoppingCart(): Promise<Array<ShoppingCartItem>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    placeOrder(address: string, slot: string): Promise<void>;
+    removeFromCart(productId: bigint): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
-    submitContact(name: string, email: string, message: string): Promise<void>;
+    searchProducts(searchTerm: string): Promise<Array<Product>>;
+    submitContact(name: string, email: string, msg: string): Promise<void>;
 }
 import type { UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
@@ -132,6 +161,34 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async addProduct(arg0: Product): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addProduct(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addProduct(arg0);
+            return result;
+        }
+    }
+    async addToCart(arg0: bigint, arg1: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addToCart(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addToCart(arg0, arg1);
+            return result;
+        }
+    }
     async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
         if (this.processError) {
             try {
@@ -146,6 +203,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async deleteProduct(arg0: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteProduct(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteProduct(arg0);
+            return result;
+        }
+    }
     async getAllContacts(): Promise<Array<Contact>> {
         if (this.processError) {
             try {
@@ -157,6 +228,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getAllContacts();
+            return result;
+        }
+    }
+    async getAllProducts(): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllProducts();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllProducts();
             return result;
         }
     }
@@ -188,6 +273,48 @@ export class Backend implements backendInterface {
             return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
         }
     }
+    async getOrderHistory(): Promise<Array<Order>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getOrderHistory();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getOrderHistory();
+            return result;
+        }
+    }
+    async getProductsByCategory(arg0: string): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProductsByCategory(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProductsByCategory(arg0);
+            return result;
+        }
+    }
+    async getShoppingCart(): Promise<Array<ShoppingCartItem>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getShoppingCart();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getShoppingCart();
+            return result;
+        }
+    }
     async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
         if (this.processError) {
             try {
@@ -216,6 +343,34 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async placeOrder(arg0: string, arg1: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.placeOrder(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.placeOrder(arg0, arg1);
+            return result;
+        }
+    }
+    async removeFromCart(arg0: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removeFromCart(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removeFromCart(arg0);
+            return result;
+        }
+    }
     async saveCallerUserProfile(arg0: UserProfile): Promise<void> {
         if (this.processError) {
             try {
@@ -227,6 +382,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+    async searchProducts(arg0: string): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.searchProducts(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.searchProducts(arg0);
             return result;
         }
     }

@@ -1,154 +1,110 @@
 import { Button } from "@/components/ui/button";
-import { Calendar, ChevronDown, Phone } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function HeroSection() {
   const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="min-h-screen bg-background flex items-center pt-16"
     >
-      {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('/assets/generated/hospital-hero.dim_1200x600.jpg')",
-        }}
-      />
-
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 hero-overlay" />
-
-      {/* Decorative pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-        <div className="max-w-2xl">
-          {/* Badge */}
+      <div className="max-w-6xl mx-auto px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20">
+          {/* Left: Text */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/25 text-white text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-6"
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex flex-col gap-6"
           >
-            <span className="w-2 h-2 bg-hospital-green rounded-full animate-pulse" />
-            Sahakara Nagar, Bangalore
-          </motion.div>
+            <div className="inline-flex items-center gap-2 bg-lavender-card border border-indigo/20 rounded-full px-4 py-1.5 w-fit">
+              <span className="w-2 h-2 rounded-full bg-indigo animate-pulse" />
+              <span className="text-sm text-indigo font-medium">
+                Available for hire
+              </span>
+            </div>
 
-          {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5"
-          >
-            Sri Sai Krupa
-            <span className="block text-hospital-teal-light mt-1">
-              Hospital
-            </span>
-          </motion.h1>
+            <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+              Hi, I&apos;m <span className="text-indigo">Sam</span>
+            </h1>
 
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="text-white/85 text-lg sm:text-xl font-medium mb-2 leading-relaxed"
-          >
-            Compassionate Care, Trusted Healing
-          </motion.p>
+            <p className="text-lg text-muted-foreground font-medium">
+              Web Developer · Logo Designer · UI/UX Expert
+            </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="text-white/65 text-base mb-10 max-w-lg"
-          >
-            Your health is our highest priority. Serving Bangalore with expert
-            medical care, modern facilities, and a compassionate team for over
-            20 years.
-          </motion.p>
+            <p className="text-base text-muted-foreground max-w-lg leading-relaxed">
+              I build beautiful, responsive websites and craft stunning brand
+              identities that help businesses grow and stand out online.
+            </p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.55 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
-            <Button
-              data-ocid="hero.primary_button"
-              onClick={() => scrollTo("#appointment")}
-              size="lg"
-              className="hospital-gradient text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:opacity-90 transition-opacity border-0 text-base"
-            >
-              <Calendar className="w-4 h-4 mr-2" />
-              Book Appointment
-            </Button>
-            <Button
-              data-ocid="hero.secondary_button"
-              onClick={() => scrollTo("#contact")}
-              size="lg"
-              variant="outline"
-              className="bg-white/15 backdrop-blur-sm border-white/40 text-white hover:bg-white/25 hover:text-white font-semibold px-8 py-3 rounded-full text-base"
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              Call Us
-            </Button>
-          </motion.div>
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Button
+                size="lg"
+                className="bg-indigo text-white hover:bg-indigo-dark shadow-card-hover"
+                onClick={() => scrollTo("#portfolio")}
+                data-ocid="hero.primary_button"
+              >
+                View My Work
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-indigo text-indigo hover:bg-secondary"
+                onClick={() => scrollTo("#contact")}
+                data-ocid="hero.secondary_button"
+              >
+                Let&apos;s Talk
+              </Button>
+            </div>
 
-          {/* Quick stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="mt-14 flex flex-wrap gap-8"
-          >
-            {[
-              { value: "500+", label: "Patients Monthly" },
-              { value: "15+", label: "Specialists" },
-              { value: "24/7", label: "Emergency Care" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-2xl font-bold text-white">
-                  {stat.value}
+            {/* Stats */}
+            <div className="flex gap-8 pt-4">
+              {[
+                { num: "50+", label: "Projects Done" },
+                { num: "30+", label: "Happy Clients" },
+                { num: "3+", label: "Years Exp." },
+              ].map((s) => (
+                <div key={s.label}>
+                  <div className="text-2xl font-bold text-indigo">{s.num}</div>
+                  <div className="text-xs text-muted-foreground">{s.label}</div>
                 </div>
-                <div className="text-white/60 text-sm mt-0.5">{stat.label}</div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right: Portrait */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.93 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+            className="relative flex justify-center lg:justify-end"
+          >
+            <div className="relative">
+              {/* Decorative ring */}
+              <div className="absolute -inset-4 rounded-3xl bg-indigo/10 -z-10" />
+              <div className="absolute -inset-1 rounded-2xl border-2 border-indigo/20" />
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80"
+                alt="Sam — Web Developer & Designer"
+                className="w-80 h-96 lg:w-96 lg:h-[480px] object-cover rounded-2xl shadow-card-hover"
+              />
+              {/* Floating badge */}
+              <div className="absolute -bottom-4 -left-4 bg-card rounded-xl shadow-card px-4 py-3 border border-border animate-float">
+                <div className="text-xs text-muted-foreground">
+                  Latest Project
+                </div>
+                <div className="text-sm font-semibold text-foreground">
+                  E-commerce UI
+                </div>
+                <div className="text-xs text-indigo">React + Figma</div>
               </div>
-            ))}
+            </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 6, 0] }}
-        transition={{
-          delay: 1.2,
-          duration: 1.5,
-          repeat: Number.POSITIVE_INFINITY,
-        }}
-        onClick={() => scrollTo("#about")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 hover:text-white transition-colors"
-        aria-label="Scroll down"
-      >
-        <ChevronDown className="w-8 h-8" />
-      </motion.button>
     </section>
   );
 }

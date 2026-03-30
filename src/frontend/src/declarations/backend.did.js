@@ -8,6 +8,14 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const Product = IDL.Record({
+  'name' : IDL.Text,
+  'description' : IDL.Text,
+  'imageUrl' : IDL.Text,
+  'category' : IDL.Text,
+  'rating' : IDL.Nat,
+  'price' : IDL.Nat,
+});
 export const UserRole = IDL.Variant({
   'admin' : IDL.Null,
   'user' : IDL.Null,
@@ -21,26 +29,55 @@ export const Contact = IDL.Record({
   'timestamp' : Time,
 });
 export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+export const ShoppingCartItem = IDL.Record({
+  'productId' : IDL.Nat,
+  'quantity' : IDL.Nat,
+});
+export const Order = IDL.Record({
+  'deliveryAddress' : IDL.Text,
+  'user' : IDL.Principal,
+  'deliverySlot' : IDL.Text,
+  'timestamp' : Time,
+  'items' : IDL.Vec(ShoppingCartItem),
+});
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addProduct' : IDL.Func([Product], [IDL.Nat], []),
+  'addToCart' : IDL.Func([IDL.Nat, IDL.Nat], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'deleteProduct' : IDL.Func([IDL.Nat], [], []),
   'getAllContacts' : IDL.Func([], [IDL.Vec(Contact)], ['query']),
+  'getAllProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getOrderHistory' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+  'getProductsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Product)], ['query']),
+  'getShoppingCart' : IDL.Func([], [IDL.Vec(ShoppingCartItem)], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'placeOrder' : IDL.Func([IDL.Text, IDL.Text], [], []),
+  'removeFromCart' : IDL.Func([IDL.Nat], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'searchProducts' : IDL.Func([IDL.Text], [IDL.Vec(Product)], ['query']),
   'submitContact' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const Product = IDL.Record({
+    'name' : IDL.Text,
+    'description' : IDL.Text,
+    'imageUrl' : IDL.Text,
+    'category' : IDL.Text,
+    'rating' : IDL.Nat,
+    'price' : IDL.Nat,
+  });
   const UserRole = IDL.Variant({
     'admin' : IDL.Null,
     'user' : IDL.Null,
@@ -54,20 +91,45 @@ export const idlFactory = ({ IDL }) => {
     'timestamp' : Time,
   });
   const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  const ShoppingCartItem = IDL.Record({
+    'productId' : IDL.Nat,
+    'quantity' : IDL.Nat,
+  });
+  const Order = IDL.Record({
+    'deliveryAddress' : IDL.Text,
+    'user' : IDL.Principal,
+    'deliverySlot' : IDL.Text,
+    'timestamp' : Time,
+    'items' : IDL.Vec(ShoppingCartItem),
+  });
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addProduct' : IDL.Func([Product], [IDL.Nat], []),
+    'addToCart' : IDL.Func([IDL.Nat, IDL.Nat], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'deleteProduct' : IDL.Func([IDL.Nat], [], []),
     'getAllContacts' : IDL.Func([], [IDL.Vec(Contact)], ['query']),
+    'getAllProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getOrderHistory' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+    'getProductsByCategory' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(Product)],
+        ['query'],
+      ),
+    'getShoppingCart' : IDL.Func([], [IDL.Vec(ShoppingCartItem)], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'placeOrder' : IDL.Func([IDL.Text, IDL.Text], [], []),
+    'removeFromCart' : IDL.Func([IDL.Nat], [], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'searchProducts' : IDL.Func([IDL.Text], [IDL.Vec(Product)], ['query']),
     'submitContact' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
   });
 };

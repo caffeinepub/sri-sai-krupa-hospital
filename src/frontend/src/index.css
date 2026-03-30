@@ -9,71 +9,66 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Bricolage Grotesque";
-  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
-  font-weight: 200 800;
-  font-display: swap;
-}
-
 @layer base {
   :root {
-    /* Logskim — Corporate Navy/White Theme */
-    /* #FFFFFF background */
-    --background: 1 0 0;
-    /* #111827 headings/foreground */
-    --foreground: 0.18 0.01 255;
+    /* FreshBasket — Green Grocery Theme */
+    /* bg: cool near-white #F5F7FA → oklch(0.975 0.004 264) */
+    --background: 0.975 0.004 264;
+    --foreground: 0.15 0.015 264;
 
     --card: 1 0 0;
-    --card-foreground: 0.18 0.01 255;
+    --card-foreground: 0.15 0.015 264;
 
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.01 255;
+    --popover-foreground: 0.15 0.015 264;
 
-    /* primary navy #0B2A45 → oklch(0.22 0.06 243) */
-    --primary: 0.22 0.06 243;
+    /* primary brand green #2E7D32 → oklch(0.44 0.16 142) */
+    --primary: 0.44 0.16 142;
     --primary-foreground: 1 0 0;
 
-    /* section bg #F5F7FA → oklch(0.97 0.005 243) */
-    --section-alt: 0.97 0.005 243;
+    /* light green tint for secondary */
+    --secondary: 0.93 0.03 142;
+    --secondary-foreground: 0.44 0.16 142;
 
-    /* icon chip #EEF2F6 → oklch(0.95 0.01 243) */
-    --chip-bg: 0.95 0.01 243;
+    --muted: 0.95 0.006 264;
+    --muted-foreground: 0.52 0.01 264;
 
-    --secondary: 0.96 0.005 243;
-    --secondary-foreground: 0.22 0.06 243;
-
-    --muted: 0.97 0.005 243;
-    /* #6B7280 muted text → oklch(0.52 0.01 243) */
-    --muted-foreground: 0.52 0.01 243;
-
-    --accent: 0.95 0.01 243;
-    --accent-foreground: 0.22 0.06 243;
+    --accent: 0.93 0.04 142;
+    --accent-foreground: 0.36 0.14 142;
 
     --destructive: 0.58 0.22 25;
     --destructive-foreground: 1 0 0;
 
-    /* #E5E7EB border → oklch(0.92 0.005 243) */
-    --border: 0.92 0.005 243;
-    --input: 0.92 0.005 243;
-    --ring: 0.22 0.06 243;
+    --border: 0.92 0.005 264;
+    --input: 0.92 0.005 264;
+    --ring: 0.44 0.16 142;
 
-    --radius: 12px;
+    --radius: 0.75rem;
 
-    --chart-1: 0.22 0.06 243;
-    --chart-2: 0.45 0.1 243;
-    --chart-3: 0.65 0.08 243;
-    --chart-4: 0.52 0.01 243;
-    --chart-5: 0.72 0.12 200;
+    /* Brand tokens */
+    --brand-green: 0.44 0.16 142;
+    --brand-green-dark: 0.36 0.14 142;
+    --brand-green-hover: 0.38 0.15 142;
+    --brand-green-light: 0.93 0.04 142;
+    --star-gold: 0.78 0.17 86;
+    --cool-bg: 0.975 0.004 264;
+    --text-dark: 0.15 0.015 264;
+    --text-muted: 0.52 0.01 264;
 
-    --sidebar: 0.22 0.06 243;
+    --chart-1: 0.44 0.16 142;
+    --chart-2: 0.62 0.14 142;
+    --chart-3: 0.78 0.17 86;
+    --chart-4: 0.58 0.22 25;
+    --chart-5: 0.52 0.14 220;
+
+    --sidebar: 0.44 0.16 142;
     --sidebar-foreground: 1 0 0;
-    --sidebar-primary: 0.45 0.1 243;
+    --sidebar-primary: 0.36 0.14 142;
     --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.3 0.07 243;
+    --sidebar-accent: 0.4 0.15 142;
     --sidebar-accent-foreground: 1 0 0;
-    --sidebar-border: 0.3 0.07 243;
-    --sidebar-ring: 0.45 0.1 243;
+    --sidebar-border: 0.4 0.12 142;
+    --sidebar-ring: 0.44 0.16 142;
   }
 }
 
@@ -90,46 +85,92 @@
   }
 }
 
-/* ===== Section reveal animation ===== */
-@keyframes fadeInUp {
+/* Cart drawer slide animation */
+.cart-drawer-enter {
+  transform: translateX(100%);
+}
+.cart-drawer-enter-active {
+  transform: translateX(0);
+  transition: transform 0.3s ease-out;
+}
+.cart-drawer-exit {
+  transform: translateX(0);
+}
+.cart-drawer-exit-active {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in;
+}
+
+/* Category pills scroll */
+.category-pills-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.category-pills-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Product card hover */
+.product-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px oklch(var(--brand-green) / 0.12);
+}
+
+/* Overlay for cart/modal */
+.overlay-backdrop {
+  animation: fadeInOverlay 0.2s ease-out;
+}
+@keyframes fadeInOverlay {
   from {
     opacity: 0;
-    transform: translateY(28px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
-.fade-in-up {
-  animation: fadeInUp 0.65s ease forwards;
+
+/* Cart drawer slide-in */
+.cart-slide-in {
+  animation: slideInRight 0.3s ease-out;
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-/* ===== Star rating ===== */
-.star-filled {
-  color: #f59e0b;
+/* Modal pop-in */
+.modal-pop-in {
+  animation: modalPopIn 0.25s ease-out;
 }
-.star-empty {
-  color: #d1d5db;
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-/* ===== Scrollbar ===== */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: oklch(0.97 0.005 243);
+  background: oklch(var(--cool-bg));
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.65 0.04 243);
+  background: oklch(var(--brand-green) / 0.4);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.22 0.06 243);
-}
-
-/* ===== Active nav link ===== */
-.nav-link-active {
-  color: oklch(0.22 0.06 243);
-  font-weight: 600;
+  background: oklch(var(--brand-green) / 0.6);
 }

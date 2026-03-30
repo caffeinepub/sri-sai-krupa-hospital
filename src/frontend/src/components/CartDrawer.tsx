@@ -1,158 +1,167 @@
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, ShoppingBag, X } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "@/context/CartContext";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 
 interface CartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
+  onCheckout: () => void;
 }
 
-export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
+export default function CartDrawer({ onCheckout }: CartDrawerProps) {
   const {
-    cartItems,
-    cartTotal,
-    cartCount,
+    items,
+    isCartOpen,
+    setIsCartOpen,
     updateQuantity,
     removeFromCart,
-    clearCart,
+    totalItems,
+    totalPrice,
   } = useCart();
+
+  if (!isCartOpen) return null;
+
+  const handleClose = () => setIsCartOpen(false);
 
   return (
     <>
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          role="button"
-          tabIndex={0}
-          className="fixed inset-0 bg-black/40 z-50 backdrop-blur-sm"
-          onClick={onClose}
-          onKeyDown={(e) => e.key === "Escape" && onClose()}
-          data-ocid="cart.modal"
-          aria-label="Close cart"
-        />
-      )}
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/40 z-50 overlay-backdrop"
+        onClick={handleClose}
+        onKeyDown={(e) => e.key === "Escape" && handleClose()}
+        role="button"
+        tabIndex={-1}
+        aria-label="Close cart"
+        data-ocid="cart.modal"
+      />
 
       {/* Drawer */}
       <div
-        className={`cart-drawer fixed top-0 right-0 h-full w-full max-w-sm bg-background z-50 shadow-2xl flex flex-col ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        data-ocid="cart.sheet"
+        className="fixed right-0 top-0 h-full w-full max-w-[400px] bg-white z-50 flex flex-col shadow-modal cart-slide-in"
+        data-ocid="cart.panel"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
           <div className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-primary" />
-            <h2 className="font-display font-bold text-lg">Your Cart</h2>
-            {cartCount > 0 && (
-              <span className="bg-primary text-primary-foreground text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                {cartCount}
+            <h2 className="text-base font-bold text-foreground">My Cart</h2>
+            {totalItems > 0 && (
+              <span className="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {totalItems}
               </span>
             )}
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="h-8 w-8"
+          <button
+            type="button"
+            onClick={handleClose}
+            className="p-1.5 rounded-md hover:bg-muted text-muted-foreground transition-colors"
             data-ocid="cart.close_button"
           >
-            <X className="w-4 h-4" />
-          </Button>
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Items */}
         <div className="flex-1 overflow-y-auto px-5 py-4">
-          {cartItems.length === 0 ? (
+          {items.length === 0 ? (
             <div
-              className="flex flex-col items-center justify-center h-full text-center text-muted-foreground"
+              className="flex flex-col items-center justify-center h-full gap-4 text-center"
               data-ocid="cart.empty_state"
             >
-              <span className="text-5xl mb-4">🛒</span>
-              <p className="font-semibold text-lg">Your cart is empty</p>
-              <p className="text-sm mt-1">Add some fresh groceries!</p>
+              <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
+                <ShoppingBag className="w-10 h-10 text-muted-foreground" />
+              </div>
+              <div>
+                <p className="font-semibold text-foreground mb-1">
+                  Your cart is empty
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Add items to get started
+                </p>
+              </div>
             </div>
           ) : (
-            <ul className="space-y-4" data-ocid="cart.list">
-              {cartItems.map((item, i) => (
-                <li
-                  key={item.id}
-                  className="flex gap-3 items-center"
-                  data-ocid={`cart.item.${i + 1}`}
+            <div className="flex flex-col gap-4">
+              {items.map((item, index) => (
+                <div
+                  key={item.product.id}
+                  className="flex items-center gap-3 p-3 bg-muted/40 rounded-xl"
+                  data-ocid={`cart.item.${index + 1}`}
                 >
                   <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-14 h-14 rounded-lg object-cover shrink-0"
+                    src={item.product.imageUrl}
+                    alt={item.product.name}
+                    className="w-16 h-16 object-cover rounded-lg shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm truncate">
-                      {item.name}
+                    <p className="text-sm font-semibold text-foreground truncate">
+                      {item.product.name}
                     </p>
-                    <p className="text-primary font-bold text-sm">
-                      ₹{item.price}
+                    <p className="text-xs text-muted-foreground">
+                      {item.product.unit}
+                    </p>
+                    <p className="text-sm font-bold text-primary mt-0.5">
+                      ₹{(item.product.price * item.quantity).toLocaleString()}
                     </p>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      data-ocid={`cart.secondary_button.${i + 1}`}
+                  <div className="flex flex-col items-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => removeFromCart(item.product.id)}
+                      className="text-muted-foreground hover:text-red-500 transition-colors"
+                      data-ocid={`cart.delete_button.${index + 1}`}
                     >
-                      <Minus className="w-3 h-3" />
-                    </Button>
-                    <span className="w-6 text-center font-semibold text-sm">
-                      {item.quantity}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      data-ocid={`cart.primary_button.${i + 1}`}
-                    >
-                      <Plus className="w-3 h-3" />
-                    </Button>
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.product.id, -1)}
+                        className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                        data-ocid={`cart.secondary_button.${index + 1}`}
+                      >
+                        <Minus className="w-3 h-3" />
+                      </button>
+                      <span className="w-8 text-center text-sm font-semibold">
+                        {item.quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.product.id, 1)}
+                        className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[oklch(var(--brand-green-hover))] transition-colors"
+                        data-ocid={`cart.button.${index + 1}`}
+                      >
+                        <Plus className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-7 w-7 text-destructive hover:text-destructive"
-                    onClick={() => removeFromCart(item.id)}
-                    data-ocid={`cart.delete_button.${i + 1}`}
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </Button>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
 
         {/* Footer */}
-        {cartItems.length > 0 && (
+        {items.length > 0 && (
           <div className="border-t border-border px-5 py-4 space-y-3">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Delivery</span>
+              <span className="text-green-600 font-medium">Free</span>
+            </div>
+            <div className="flex items-center justify-between">
               <span className="font-semibold text-foreground">Subtotal</span>
-              <span className="font-bold text-xl text-primary">
-                ₹{cartTotal}
+              <span className="text-xl font-bold text-primary">
+                ₹{totalPrice.toLocaleString()}
               </span>
             </div>
             <Button
-              className="w-full bg-primary text-primary-foreground hover:bg-fresh-green-dark h-12 font-bold text-base rounded-xl"
-              data-ocid="cart.submit_button"
+              className="w-full bg-primary hover:bg-[oklch(var(--brand-green-hover))] text-white font-semibold py-3 rounded-xl"
+              onClick={() => {
+                setIsCartOpen(false);
+                onCheckout();
+              }}
+              data-ocid="cart.primary_button"
             >
-              Checkout — ₹{cartTotal}
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full text-muted-foreground text-sm"
-              onClick={clearCart}
-              data-ocid="cart.delete_button"
-            >
-              Clear Cart
+              Proceed to Checkout →
             </Button>
           </div>
         )}
